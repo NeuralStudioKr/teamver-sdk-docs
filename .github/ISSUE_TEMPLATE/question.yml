@@ -10,7 +10,6 @@ body:
       options:
         - agent-sdk (teamver-agent-sdk)
         - mail-agent (teamver-mail-agent)
-        - app-sdk (teamver-app-sdk)
         - sdk-core (teamver-sdk-core)
         - not sure
     validations:

@@ -22,7 +22,7 @@ PyPI: [teamver-sdk-core](https://pypi.org/project/teamver-sdk-core/)
 
 | Constant | Host | Used by |
 | --- | --- | --- |
-| `DEFAULT_CHANNEL_API_BASE` / `DEFAULT_MAIN_API_BASE` | `https://api.teamver.com` | channel/Drive/DM, be-sdk, app-sdk |
+| `DEFAULT_CHANNEL_API_BASE` / `DEFAULT_MAIN_API_BASE` | `https://api.teamver.com` | channel/Drive/DM, agent-sdk |
 | `DEFAULT_AGENT_API_BASE` | `https://agent-api.teamver.com` | agent-sdk jobs/heartbeat |
 | `DEFAULT_MAIL_API_BASE` | `https://mail-api.teamver.com` | mail-agent, agent-sdk mail |
 

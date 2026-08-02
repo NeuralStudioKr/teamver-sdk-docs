@@ -17,11 +17,10 @@
 | Client | Target | Typical token |
 |--------|--------|----------------|
 | **teamver-agent-sdk** (this) | Unified facade: channel + DM + Drive + SSE + mail + jobs | `tv_ak_*` + `tv_agent_*` |
-| **teamver-be-sdk** | Full Main BE (auth, drive, chat, admin, …) | User JWT or `tv_ak_*` per route |
 | **teamver-mail-agent** | Mail BE only (inbox loop, processing, reply) | `tv_agent_*` |
-| **teamver-app-sdk** | Per-app user JWT + App Service | App session |
+| **teamver-sdk-core** | Shared HTTP transport / errors (dependency) | — |
 
-Use **this SDK** when the runtime already has `TEAMVER_WORKSPACE_ID`, `TEAMVER_AGENT_ID`, and one or both agent tokens injected (WS-E VM env). Use **teamver-mail-agent** directly if you only need mail and want fewer layers. Use **teamver-be-sdk** for workspace admin flows or user-scoped chat.
+Use **this SDK** when the runtime already has `TEAMVER_WORKSPACE_ID`, `TEAMVER_AGENT_ID`, and one or both agent tokens injected. Use **teamver-mail-agent** directly if you only need mail and want fewer layers.
 
 ---
 

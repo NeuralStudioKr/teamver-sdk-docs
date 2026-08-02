@@ -21,8 +21,9 @@ When filing an issue, pick the matching label (or mention the SDK in the title):
 |-------|---------|
 | `sdk: agent` | `teamver-agent-sdk` |
 | `sdk: mail-agent` | `teamver-mail-agent` |
-| `sdk: app` | `teamver-app-sdk` |
 | `sdk: core` | `teamver-sdk-core` |
+
+이 저장소는 **agent 필수 SDK** 문서만 다룹니다. `teamver-app-sdk` 등 App/BE SDK는 범위 밖입니다.
 
 Also use `type: bug`, `type: docs`, or `type: question` when applicable.
 

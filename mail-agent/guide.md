@@ -16,9 +16,7 @@
 | Client | Target | Base URL |
 |--------|--------|----------|
 | **teamver-mail-agent** (this) | Mail BE agent inbox / events / reply | `{MAIL_HOST}` — **no** `/api` prefix |
-| **teamver-be-sdk** | Main BE — workspace, AI agents, drive | `{HOST}/api`, `/api/v2` |
-| **teamver-agent-sdk** | Unified agent config → wraps this client for mail | Same as mail when env set |
-| **teamver-app-sdk** | Per-app user JWT flows | App-specific paths |
+| **teamver-agent-sdk** | Unified agent facade → wraps this client for mail | Same as mail when env set |
 
 Your runtime token is **`tv_agent_…`** issued for a **mail agent mailbox**, not a user JWT.
 

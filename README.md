@@ -1,13 +1,15 @@
 # Teamver SDK Docs
 
-Public documentation for Teamver Python SDKs published on PyPI.
+Public documentation for Teamver **agent** Python SDKs published on PyPI.
+
+> Scope: agent 런타임에 필요한 필수 패키지만 공개합니다 (`agent-sdk` · `mail-agent` · `sdk-core`).  
+> App/BE용 SDK(`teamver-app-sdk` 등)는 PyPI·문서 공개 대상이 아닙니다.
 
 | PyPI package | Docs | Latest |
 |--------------|------|--------|
 | [`teamver-agent-sdk`](https://pypi.org/project/teamver-agent-sdk/) | [agent-sdk/](./agent-sdk/) | 0.6.2 |
 | [`teamver-mail-agent`](https://pypi.org/project/teamver-mail-agent/) | [mail-agent/](./mail-agent/) | 0.3.1 |
 | [`teamver-sdk-core`](https://pypi.org/project/teamver-sdk-core/) | [sdk-core/](./sdk-core/) | 0.1.1 |
-| [`teamver-app-sdk`](https://pypi.org/project/teamver-app-sdk/) | [app-sdk/](./app-sdk/) | 0.1.3 |
 
 ## Repository layout
 
@@ -15,7 +17,6 @@ Public documentation for Teamver Python SDKs published on PyPI.
 agent-sdk/       # Unified agent runtime SDK (channel, DM, Drive, mail, jobs)
 mail-agent/      # Mail BE agent client
 sdk-core/        # Shared HTTP transport / errors
-app-sdk/         # AI App → Main BE client
 examples/        # Runnable snippets (install from PyPI)
 ```
 
