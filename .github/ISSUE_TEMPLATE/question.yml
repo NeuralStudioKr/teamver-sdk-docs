@@ -1,0 +1,23 @@
+name: Question
+description: Ask how to use a Teamver SDK
+title: "[question] "
+labels: ["type: question"]
+body:
+  - type: dropdown
+    id: sdk
+    attributes:
+      label: SDK
+      options:
+        - agent-sdk (teamver-agent-sdk)
+        - mail-agent (teamver-mail-agent)
+        - app-sdk (teamver-app-sdk)
+        - sdk-core (teamver-sdk-core)
+        - not sure
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true

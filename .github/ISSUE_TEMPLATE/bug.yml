@@ -1,0 +1,34 @@
+name: Bug (docs / examples)
+description: Broken example or incorrect documented behavior
+title: "[bug] "
+labels: ["type: bug"]
+body:
+  - type: dropdown
+    id: sdk
+    attributes:
+      label: SDK
+      options:
+        - agent-sdk (teamver-agent-sdk)
+        - mail-agent (teamver-mail-agent)
+        - app-sdk (teamver-app-sdk)
+        - sdk-core (teamver-sdk-core)
+        - examples
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: e.g. 0.6.2
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+    validations:
+      required: true

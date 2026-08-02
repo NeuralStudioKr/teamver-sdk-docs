@@ -1,0 +1,36 @@
+name: Documentation
+description: Missing, unclear, or incorrect SDK docs
+title: "[docs] "
+labels: ["type: docs"]
+body:
+  - type: dropdown
+    id: sdk
+    attributes:
+      label: SDK
+      description: Which package does this concern?
+      options:
+        - agent-sdk (teamver-agent-sdk)
+        - mail-agent (teamver-mail-agent)
+        - app-sdk (teamver-app-sdk)
+        - sdk-core (teamver-sdk-core)
+        - multiple / repo-wide
+    validations:
+      required: true
+  - type: textarea
+    id: page
+    attributes:
+      label: Page / path
+      description: e.g. agent-sdk/configuration.md
+      placeholder: agent-sdk/…
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong or missing?
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested fix (optional)
