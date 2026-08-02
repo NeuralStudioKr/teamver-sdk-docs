@@ -13,6 +13,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 - PyPI / README documentation URLs → public
   [teamver-sdk-docs/agent-sdk](https://github.com/NeuralStudioKr/teamver-sdk-docs/tree/main/agent-sdk)
   (private monorepo `Repository` link removed).
+- PyPI author/maintainer → NeuralStudio `<dev@neuralstudio.kr>`.
 
 ## [0.6.1] - 2026-08-02
 

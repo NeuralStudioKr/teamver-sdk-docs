@@ -15,6 +15,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 ### Changed
 - PyPI documentation URLs → public
   [teamver-sdk-docs/sdk-core](https://github.com/NeuralStudioKr/teamver-sdk-docs/tree/main/sdk-core).
+- PyPI author/maintainer → NeuralStudio `<dev@neuralstudio.kr>`.
 
 ## [0.1.0] - 2026-07-23
 

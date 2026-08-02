@@ -9,6 +9,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
   to `https://mail-api.teamver.com` when unset (token still required).
 - PyPI / README documentation URLs → public
   [teamver-sdk-docs/mail-agent](https://github.com/NeuralStudioKr/teamver-sdk-docs/tree/main/mail-agent).
+- PyPI author/maintainer → NeuralStudio `<dev@neuralstudio.kr>`.
 
 ## [0.3.0] - 2026-07-23
 
