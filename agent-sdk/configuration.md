@@ -8,7 +8,7 @@ Load with `TeamverAgentConfig.from_env()` or `TeamverAgent()`.
 |-----|---------|---------|
 | `TEAMVER_WORKSPACE_ID` | workspace id (`WS-…`) | *(required)* |
 | `TEAMVER_AGENT_ID` | agent id (`AGT-…`) | *(required)* |
-| `TEAMVER_CHANNEL_API_BASE` | Main API host (**no** `/api`) | `https://api.teamver.com` |
+| `TEAMVER_MAIN_API_BASE` | Main API host (**no** `/api`) | `https://api.teamver.com` |
 | `TEAMVER_AGENT_TOKEN` | channel/DM/drive/jobs grant (`tv_ak_*`) | — |
 | `TEAMVER_AGENT_API_BASE` | Agents BE host (jobs / heartbeat) | `https://agent-api.teamver.com` |
 | `TEAMVER_MAIL_API_BASE` | Mail API host (**no** `/v1`) | `https://mail-api.teamver.com` |
@@ -45,7 +45,7 @@ cfg = TeamverAgentConfig(
     workspace_id="WS-…",
     agent_id="AGT-…",
     channel_token="tv_ak_…",
-    # channel_api_base / agent_api_base / mail_api_base optional (defaults apply in from_env)
+    # main_api_base / agent_api_base / mail_api_base optional (defaults apply in from_env)
 )
 agent = TeamverAgent(cfg)
 ```

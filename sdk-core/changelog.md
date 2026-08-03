@@ -3,11 +3,19 @@
 All notable changes to this package are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.2] - 2026-08-03
+
+### Added
+- `main_api_base_from_env()` — `TEAMVER_MAIN_API_BASE` with legacy `TEAMVER_CHANNEL_API_BASE` fallback.
+
+### Changed
+- `DEFAULT_MAIN_API_BASE` canonical; `DEFAULT_CHANNEL_API_BASE` deprecated alias.
+
 ## [0.1.1] - 2026-08-02
 
 ### Added
 - `defaults.py`: production API host constants
-  (`DEFAULT_CHANNEL_API_BASE` / `DEFAULT_MAIN_API_BASE` =
+  (`DEFAULT_MAIN_API_BASE` =
   `https://api.teamver.com`, `DEFAULT_AGENT_API_BASE` =
   `https://agent-api.teamver.com`, `DEFAULT_MAIL_API_BASE` =
   `https://mail-api.teamver.com`). Exported from package root.

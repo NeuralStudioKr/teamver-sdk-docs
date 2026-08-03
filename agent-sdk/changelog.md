@@ -2,11 +2,17 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.3] - 2026-08-03
+
+### Changed
+- **`TEAMVER_MAIN_API_BASE`** / config `main_api_base` is the canonical Main host (channel · DM · drive).
+- Deprecated: `TEAMVER_CHANNEL_API_BASE`, config `channel_api_base` (alias only; legacy env still read if MAIN unset).
+
 ## [0.6.2] - 2026-08-02
 
 ### Changed
 - `from_env()` defaults API hosts when unset:
-  `TEAMVER_CHANNEL_API_BASE` → `https://api.teamver.com`,
+  `TEAMVER_MAIN_API_BASE` → `https://api.teamver.com`,
   `TEAMVER_AGENT_API_BASE` → `https://agent-api.teamver.com`,
   `TEAMVER_MAIL_API_BASE` → `https://mail-api.teamver.com`
   (SSOT: `teamver-sdk-core` defaults).

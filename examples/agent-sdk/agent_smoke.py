@@ -36,7 +36,7 @@ def _debug_enabled() -> bool:
 _SCENARIO_ENV_KEYS = (
     "TEAMVER_WORKSPACE_ID",
     "TEAMVER_AGENT_ID",
-    "TEAMVER_CHANNEL_API_BASE",
+    "TEAMVER_MAIN_API_BASE",
     "TEAMVER_AGENT_TOKEN",
     "TEAMVER_AGENT_API_BASE",
     "TEAMVER_MAIL_API_BASE",
@@ -126,7 +126,7 @@ async def cmd_dry_run(_: argparse.Namespace) -> int:
             "channel_enabled": cfg.channel_enabled,
             "mail_enabled": cfg.mail_enabled,
             "jobs_enabled": cfg.jobs_enabled,
-            "channel_api_base": cfg.channel_api_base,
+            "main_api_base": cfg.main_api_base,
             "mail_api_base": cfg.mail_api_base,
             "agent_api_base": cfg.agent_api_base,
             "channel_token_set": bool(cfg.channel_token),

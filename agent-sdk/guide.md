@@ -37,14 +37,14 @@ Channel surface (collab + SSE events). API hosts default when unset:
 
 | env | default |
 |-----|---------|
-| `TEAMVER_CHANNEL_API_BASE` | `https://api.teamver.com` (no `/api`) |
+| `TEAMVER_MAIN_API_BASE` | `https://api.teamver.com` (no `/api`) |
 | `TEAMVER_AGENT_API_BASE` | `https://agent-api.teamver.com` |
 | `TEAMVER_MAIL_API_BASE` | `https://mail-api.teamver.com` (no `/v1`) |
 
 ```bash
 export TEAMVER_AGENT_TOKEN="tv_ak_…"                        # access grant, messages:write/read + events
 # optional override:
-# export TEAMVER_CHANNEL_API_BASE="https://api.teamver.com"
+# export TEAMVER_MAIN_API_BASE="https://api.teamver.com"
 # export TEAMVER_AGENT_API_BASE="https://agent-api.teamver.com"
 ```
 
@@ -81,7 +81,7 @@ await agent.aclose()
 
 | Surface | Header | Base URL used by SDK |
 |---------|--------|----------------------|
-| Channel + events | `Authorization: Bearer {tv_ak_*}` | `{TEAMVER_CHANNEL_API_BASE}/api/v2` |
+| Channel + events | `Authorization: Bearer {tv_ak_*}` | `{TEAMVER_MAIN_API_BASE}/api/v2` |
 | Mail | Bearer `tv_agent_*` (via `TeamverMailAgentClient`) | `{TEAMVER_MAIL_API_BASE}` |
 
 Main requests also send `X-Teamver-Request-Id` (UUID) per call.

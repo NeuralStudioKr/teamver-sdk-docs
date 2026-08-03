@@ -3,7 +3,7 @@
 **Package:** `teamver-agent-sdk` v0.6.2  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
-Paths below for **Main** are suffixes after `{TEAMVER_CHANNEL_API_BASE}/api/v2`.
+Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 
 ---
 
@@ -46,7 +46,7 @@ Paths below for **Main** are suffixes after `{TEAMVER_CHANNEL_API_BASE}/api/v2`.
 |-------------|-------------|
 | `workspace_id` / `TEAMVER_WORKSPACE_ID` | Workspace id in channel paths |
 | `agent_id` / `TEAMVER_AGENT_ID` | Agent id for SSE + ack paths |
-| `channel_api_base` / `TEAMVER_CHANNEL_API_BASE` | Main host (no `/api`) |
+| `main_api_base` / `TEAMVER_MAIN_API_BASE` | Main host (no `/api`) |
 | `channel_token` / `TEAMVER_AGENT_TOKEN` | `tv_ak_*` |
 | `mail_api_base` / `TEAMVER_MAIL_API_BASE` | Mail BE host |
 | `mail_agent_token` / `TEAMVER_MAIL_AGENT_TOKEN` | `tv_agent_*` |

@@ -31,7 +31,7 @@ async def cmd_dry_run(_: argparse.Namespace) -> None:
         {
             "workspace_id": cfg.workspace_id,
             "agent_id": cfg.agent_id,
-            "channel_api_base": cfg.channel_api_base,
+            "main_api_base": cfg.main_api_base,
             "mail_api_base": cfg.mail_api_base,
             "agent_api_base": cfg.agent_api_base,
             "channel_token_set": bool(cfg.channel_token),
