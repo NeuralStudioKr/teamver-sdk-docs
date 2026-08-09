@@ -30,23 +30,29 @@ pip install teamver-agent-sdk
 
 Python **≥ 3.11**. Pulls in `teamver-mail-agent` and `teamver-sdk-core`.
 
+### Need LLM / OpenClaw tools (“skills”)?
+
+`teamver-agent-sdk` is the **runtime API**. For engine-neutral skill registry + OpenClaw/Hermes bridges, install [`teamver-agent-skills`](../agent-skills/) (see [terminology](../terminology.md)).
+
+```bash
+pip install teamver-agent-skills teamver-openclaw-adapter
+```
+
 ## Minimal example
 
 ```python
 import asyncio
-from teamver_agent_sdk import TeamverAgent, AgentToolAdapter
+from teamver_agent_sdk import TeamverAgent
 
 async def main():
     agent = TeamverAgent()  # from env
-    adapter = AgentToolAdapter(agent)
-    tools = adapter.list_tools()
     await agent.report(text="Deploy finished ✅", channel_id="CH-…")
     await agent.aclose()
 
 asyncio.run(main())
 ```
 
-See [quickstart.md](./quickstart.md) and [configuration.md](./configuration.md).
+Tool / skill dispatch: prefer [`teamver-agent-skills`](../agent-skills/) (or `AgentToolAdapter` from that package). See [quickstart.md](./quickstart.md) and [configuration.md](./configuration.md).
 
 ## License
 

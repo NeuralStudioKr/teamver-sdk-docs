@@ -16,14 +16,10 @@ API hosts default to production when unset (see [configuration.md](./configurati
 
 ```python
 import asyncio
-from teamver_agent_sdk import TeamverAgent, AgentToolAdapter
+from teamver_agent_sdk import TeamverAgent
 
 async def main():
     agent = TeamverAgent()  # TeamverAgentConfig.from_env()
-    adapter = AgentToolAdapter(agent)
-
-    # Function-calling schemas for your LLM runtime
-    tools = adapter.list_tools()
 
     # Channel report
     await agent.report(text="Hello from agent", channel_id="CH-…")
@@ -32,11 +28,6 @@ async def main():
     files = await agent.drive.list_files(drive_id="personal", limit=20)
     threads = await agent.dm.list_threads(limit=10)
 
-    await adapter.dispatch(
-        "teamver_channel_post",
-        {"channel_id": "CH-…", "text": "hello", "idempotency_key": "k1"},
-    )
-
     await agent.aclose()
 
 asyncio.run(main())
@@ -44,8 +35,25 @@ asyncio.run(main())
 
 Surfaces are lazy: channel-only agents need not set mail env (and vice versa).
 
+### Function-calling / OpenClaw tools
+
+Install [`teamver-agent-skills`](../agent-skills/) (not a Codex `SKILL.md`):
+
+```python
+from teamver_agent_skills import AgentToolAdapter
+# or OpenClaw: from teamver_openclaw_adapter import OpenClawToolBridge
+
+adapter = AgentToolAdapter(agent)
+tools = adapter.list_tools()
+await adapter.dispatch(
+    "teamver_channel_post",
+    {"channel_id": "CH-…", "text": "hello", "idempotency_key": "k1"},
+)
+```
+
 ## 3. More
 
 - [API reference](./api-reference.md)
 - [Agent guide](./guide.md)
+- [agent-skills](../agent-skills/) — registry · OpenClaw/Hermes
 - [Examples](../examples/agent-sdk/)

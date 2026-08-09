@@ -14,7 +14,7 @@ pip install teamver-agent-sdk
 Pin a version:
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.2'
+pip install 'teamver-agent-sdk==0.6.3'
 ```
 
 Dependencies installed automatically:
@@ -28,6 +28,16 @@ Dependencies installed automatically:
 ```bash
 python -c "import teamver_agent_sdk as m; print(m.__version__)"
 ```
+
+## Skills / OpenClaw tools
+
+This package alone is **not** an OpenClaw/Codex `SKILL.md` install. For Teamver function-calling skills:
+
+```bash
+pip install teamver-agent-skills teamver-openclaw-adapter
+```
+
+See [agent-skills installation](../agent-skills/installation.md) and [terminology](../terminology.md).
 
 ## Next
 
