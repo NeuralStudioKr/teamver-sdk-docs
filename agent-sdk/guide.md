@@ -1,14 +1,14 @@
 # Teamver Agent SDK — AI Agent Guide
 
 **Audience:** agent runtimes, VM-hosted agents, and LLM automation that **report to Teamver channels** and/or **reply via Teamver Mail** with one config surface.  
-**Package:** `teamver-agent-sdk` v0.6.2 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**.  
+**Package:** `teamver-agent-sdk` v0.6.5 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**.  
 **Drive/DM:** see [API reference](./api-reference.md) (DM / Drive sections).
 
 ## 변경 이력
 
 | 일시 (KST) | 변경 내용 |
 |---|-----|
-| 2026-08-02 22:55 | API host 3종 production 디폴트 (`api` / `agent-api` / `mail-api`) |
+| 2026-08-28 | Bible 정합: `W-`/`AG2-`, ACL≠`tv_ak_`, `TEAMVER_AGENTS_API_BASE`, `tv_cp_` 비사용 |
 
 ---
 
@@ -29,8 +29,8 @@ Use **this SDK** when the runtime already has `TEAMVER_WORKSPACE_ID`, `TEAMVER_A
 Required for any use:
 
 ```bash
-export TEAMVER_WORKSPACE_ID="WS-…"
-export TEAMVER_AGENT_ID="AGT-…"
+export TEAMVER_WORKSPACE_ID="W-…"
+export TEAMVER_AGENT_ID="AG2-…"
 ```
 
 Channel surface (collab + SSE events). API hosts default when unset:
@@ -261,8 +261,8 @@ Main error JSON may use `error.code` / `error.message` or FastAPI `detail` strin
 
 ## 9. agent / VM checklist
 
-1. Agents Console provisions mailbox + issues **`tv_agent_*`** (Mail) and credential with **`tv_ak_*`** (Main).
-2. VM env (WS-E): `TEAMVER_*` vars from §2.
+1. Agents Console: Access ACL applied **and** `tv_ak_*` injected into OpenClaw `openclaw.env` as `TEAMVER_AGENT_TOKEN`. Mail: provision + `tv_agent_*`.
+2. Runtime env: `TEAMVER_*` from §2 (`W-…` / `AG2-…`). Never `TEAMVER_INTERNAL_API_KEY`.
 3. Process: `listen()` loop or mail event poll → handle → `report()` or `mail.reply`.
 4. On shutdown: `await agent.aclose()`.
 
@@ -271,7 +271,7 @@ Main error JSON may use `error.code` / `error.message` or FastAPI `detail` strin
 ## 10. Verification
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.2'
+pip install 'teamver-agent-sdk>=0.6.3'
 python -c "import teamver_agent_sdk as m; print(m.__version__)"
 ```
 

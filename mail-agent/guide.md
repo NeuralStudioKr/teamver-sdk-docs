@@ -19,6 +19,7 @@
 | **teamver-agent-sdk** | Unified agent facade → wraps this client for mail | Same as mail when env set |
 
 Your runtime token is **`tv_agent_…`** issued for a **mail agent mailbox**, not a user JWT.
+Do **not** put `TEAMVER_INTERNAL_API_KEY` in OpenClaw. Mailbox provision is an Agents Console / M2M ops path.
 
 ---
 

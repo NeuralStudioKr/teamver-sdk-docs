@@ -2,6 +2,14 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.5] - 2026-08-28
+
+### Changed
+- `from_env()` reads **`TEAMVER_AGENTS_API_BASE`** when `TEAMVER_AGENT_API_BASE` is unset (OpenClaw `openclaw.env`).
+- Docs: identity examples **`W-…` / `AG2-…`**. ACL (policy) is not a substitute for `tv_ak_*` in the runtime.
+
+> PyPI may lag the monorepo until a 0.6.5 publish. API behavior above 0.6.3 is unchanged except the env alias.
+
 ## [0.6.3] - 2026-08-03
 
 ### Changed

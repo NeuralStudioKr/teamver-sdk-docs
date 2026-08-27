@@ -3,8 +3,8 @@
 ## 1. Set identity + tokens
 
 ```bash
-export TEAMVER_WORKSPACE_ID="WS-…"
-export TEAMVER_AGENT_ID="AGT-…"
+export TEAMVER_WORKSPACE_ID="W-…"
+export TEAMVER_AGENT_ID="AG2-…"
 export TEAMVER_AGENT_TOKEN="tv_ak_…"          # channel / DM / Drive / jobs
 # optional mail:
 export TEAMVER_MAIL_AGENT_TOKEN="tv_agent_…"

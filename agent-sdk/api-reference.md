@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` v0.6.2  
+**Package:** `teamver-agent-sdk` (0.6.5+ `TEAMVER_AGENTS_API_BASE` alias; PyPI current 0.6.3+)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
@@ -44,10 +44,11 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 
 | Field / env | Description |
 |-------------|-------------|
-| `workspace_id` / `TEAMVER_WORKSPACE_ID` | Workspace id in channel paths |
-| `agent_id` / `TEAMVER_AGENT_ID` | Agent id for SSE + ack paths |
+| `workspace_id` / `TEAMVER_WORKSPACE_ID` | Workspace id (`W-…`) |
+| `agent_id` / `TEAMVER_AGENT_ID` | Agent id (`AG2-…`) |
 | `main_api_base` / `TEAMVER_MAIN_API_BASE` | Main host (no `/api`) |
 | `channel_token` / `TEAMVER_AGENT_TOKEN` | `tv_ak_*` |
+| `agent_api_base` / `TEAMVER_AGENT_API_BASE` | Agents BE. Fallback `TEAMVER_AGENTS_API_BASE` (0.6.5+) |
 | `mail_api_base` / `TEAMVER_MAIL_API_BASE` | Mail BE host |
 | `mail_agent_token` / `TEAMVER_MAIL_AGENT_TOKEN` | `tv_agent_*` |
 | `channel_enabled` | property: base + token set |

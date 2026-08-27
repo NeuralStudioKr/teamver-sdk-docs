@@ -15,10 +15,9 @@ These names look similar but are **different layers**. Mixing them up is the mos
 Need Teamver APIs from Python?
   └─ pip install teamver-agent-sdk
 
-Need LLM function-calling tools (channel/DM/drive/mail/jobs)?
-  └─ pip install teamver-agent-skills
-       + optional: teamver-openclaw-adapter  (OpenClaw)
-       + optional: teamver-hermes-adapter    (Hermes)
+Need LLM function-calling tools (channel/DM/drive/mail/jobs) from OpenClaw?
+  └─ pip install teamver-agent-skills teamver-openclaw-adapter
+       (tokens still come from openclaw.env — ACL + tv_ak_ / tv_agent_)
 
 Need a Codex/OpenClaw “how to use Teamver” playbook?
   └─ That is a separate SKILL.md / plugin — not these PyPI packages.
