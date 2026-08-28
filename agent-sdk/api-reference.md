@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` (0.6.5+ `TEAMVER_AGENTS_API_BASE` alias; PyPI current 0.6.3+)  
+**Package:** `teamver-agent-sdk` (0.6.5+ `TEAMVER_AGENTS_API_BASE` alias)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.

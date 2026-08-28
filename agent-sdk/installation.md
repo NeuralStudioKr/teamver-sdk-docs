@@ -14,7 +14,7 @@ pip install teamver-agent-sdk
 Pin a version:
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.3'
+pip install 'teamver-agent-sdk==0.6.5'
 ```
 
 Dependencies installed automatically:

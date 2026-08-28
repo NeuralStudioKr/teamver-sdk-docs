@@ -271,7 +271,7 @@ Main error JSON may use `error.code` / `error.message` or FastAPI `detail` strin
 ## 10. Verification
 
 ```bash
-pip install 'teamver-agent-sdk>=0.6.3'
+pip install 'teamver-agent-sdk>=0.6.5'
 python -c "import teamver_agent_sdk as m; print(m.__version__)"
 ```
 

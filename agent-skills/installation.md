@@ -38,7 +38,7 @@ pip install 'teamver-agent-skills==0.1.0' 'teamver-openclaw-adapter==0.1.0'
 
 Dependencies installed automatically:
 
-- `teamver-agent-sdk` (≥ 0.6.3)
+- `teamver-agent-sdk` (≥ 0.6.5)
 - `teamver-mail-agent`, `teamver-sdk-core` (via agent-sdk)
 - `pydantic`
 
