@@ -2,6 +2,16 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.8] - 2026-09-02
+
+### Added
+- OpenClaw Secret Store sentinels (`oc-sent-v….end`) pass config prefix checks.
+- `TEAMVER_ALLOW_SECRET_REF=1` for other secret managers. User JWT still rejected.
+- CLI `channels` / doctor `token_kind`. Official example: OpenClaw list_channels uses SDK only.
+
+### Changed
+- Staging API host documented as `https://stg-api.teamver.com`. `/me` 404 explains stale deploy vs wrong host.
+
 ## [0.6.7] - 2026-09-02
 
 ### Changed

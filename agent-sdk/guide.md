@@ -1,13 +1,14 @@
 # Teamver Agent SDK — AI Agent Guide
 
 **Audience:** agent runtimes, VM-hosted agents, and LLM automation that **report to Teamver channels** and/or **reply via Teamver Mail** with one config surface.  
-**Package:** `teamver-agent-sdk` v0.6.7 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`).  
+**Package:** `teamver-agent-sdk` v0.6.8 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
 **Drive/DM:** see [API reference](./api-reference.md) (DM / Drive sections).
 
 ## 변경 이력
 
 | 일시 (KST) | 변경 내용 |
 |---|-----|
+| 2026-09-02 | 0.6.8: OpenClaw managed secret sentinel · CLI `channels` · staging host `stg-api.teamver.com` |
 | 2026-09-02 | 0.6.7: engine channel list never uses `/collab/channels` |
 | 2026-09-02 | 0.6.6: token-only identity; do not ask humans for W-/AG2- |
 | 2026-08-28 | Bible 정합: `W-`/`AG2-`, ACL≠`tv_ak_`, `TEAMVER_AGENTS_API_BASE`, `tv_cp_` 비사용 |

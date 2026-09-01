@@ -8,8 +8,8 @@ Product tokens and trust boundaries: Agents Console injects secrets into OpenCla
 
 | | |
 |--|--|
-| **Required** | `TEAMVER_AGENT_TOKEN` (`tv_ak_*`) |
-| **Optional (staging)** | `TEAMVER_MAIN_API_BASE` |
+| **Required** | `TEAMVER_AGENT_TOKEN` (`tv_ak_*` or OpenClaw `oc-sent-v….end`) |
+| **Optional (staging)** | `TEAMVER_MAIN_API_BASE=https://stg-api.teamver.com` |
 | **Optional (mail)** | `TEAMVER_MAIL_AGENT_TOKEN` (`tv_agent_*`) |
 | **Auto-discovered** | `workspace_id`, `agent_id`, accessible channels, drives, default report channel |
 | **Never send** | `TEAMVER_INTERNAL_API_KEY`, user password, user JWT |
@@ -26,7 +26,8 @@ Python: `from teamver_agent_sdk import describe_setup`.
 
 | env | purpose | default |
 |-----|---------|---------|
-| `TEAMVER_AGENT_TOKEN` | channel/DM/drive/jobs grant (`tv_ak_*`) | **required** to talk to Main |
+| `TEAMVER_AGENT_TOKEN` | channel/DM/drive/jobs grant (`tv_ak_*` or `oc-sent-v….end`) | **required** to talk to Main |
+| `TEAMVER_ALLOW_SECRET_REF` | `1` skips prefix checks (JWT still rejected) | unset |
 | `TEAMVER_WORKSPACE_ID` | workspace id (`W-…`; legacy `WS-…`) | *optional — `GET /api/v2/ai-agents/me`* |
 | `TEAMVER_AGENT_ID` | agent id (`AG2-…`; legacy `AGT-…`) | *optional — same* |
 | `TEAMVER_MAIN_API_BASE` | Main API host (**no** `/api`) | `https://api.teamver.com` |
@@ -47,9 +48,12 @@ If ids are already injected (VM `openclaw.env`), the SDK uses them and does not 
 
 | Token | Prefix | Used for |
 |-------|--------|----------|
-| Channel / DM / Drive / Jobs | `tv_ak_*` | Main collab + identity `/me` + Agents BE ops |
-| Mail | `tv_agent_*` | Mail BE `/v1/agent/*` |
+| Channel / DM / Drive / Jobs | `tv_ak_*` or OpenClaw `oc-sent-v….end` | Main collab + identity `/me` + Agents BE ops |
+| Mail | `tv_agent_*` or the same sentinel form | Mail BE `/v1/agent/*` |
 | Control plane | `tv_cp_*` | Identity fallback `GET /api/v2/engine/whoami` only |
+| Other secret managers | `TEAMVER_ALLOW_SECRET_REF=1` | Skip prefix; **user JWT (`eyJ…`) is still rejected** |
+
+OpenClaw Secret Store injects a process-local sentinel. The Gateway substitutes the real `tv_ak_*` only on outbound HTTPS. Run `whoami` / `doctor` / `channels` **via gateway exec**, not a local shell that never hits that proxy.
 
 Do **not** put user passwords or `TEAMVER_INTERNAL_API_KEY` in the agent runtime.
 

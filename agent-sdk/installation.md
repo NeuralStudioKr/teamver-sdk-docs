@@ -8,21 +8,24 @@ After `pip install teamver-agent-sdk`, run:
 python -m teamver_agent_sdk required-env
 ```
 
-**Required:** `TEAMVER_AGENT_TOKEN` (`tv_ak_*`).
+**Required:** `TEAMVER_AGENT_TOKEN` — plaintext `tv_ak_*` **or** an OpenClaw Secret Store sentinel (`oc-sent-v….end`). The Gateway substitutes the real token at HTTPS egress. Do not reject the sentinel in the engine.
 
-**Do not ask for** `TEAMVER_WORKSPACE_ID` or `TEAMVER_AGENT_ID`. The SDK discovers them with `GET /api/v2/ai-agents/me`. A Teamver web login is not a substitute for the agent token, and the human does not need to copy `W-…` from the UI.
+**Do not ask for** `TEAMVER_WORKSPACE_ID` or `TEAMVER_AGENT_ID`. The SDK discovers them with `GET /api/v2/ai-agents/me`. A Teamver web login is not a substitute for the agent token.
 
 **Ask only if needed:**
 
-- `TEAMVER_MAIN_API_BASE` — staging or private Main host (production default is `https://api.teamver.com`)
-- `TEAMVER_MAIL_AGENT_TOKEN` (`tv_agent_*`) — only if the agent should use Mail
+- `TEAMVER_MAIN_API_BASE` — staging API host is **`https://stg-api.teamver.com`** (not the frontend `https://stg.teamver.com`). Production default is `https://api.teamver.com`.
+- `TEAMVER_MAIL_AGENT_TOKEN` (`tv_agent_*` or the same kind of sentinel) — only if Mail is in scope
+- `TEAMVER_ALLOW_SECRET_REF=1` — only if another secret manager uses a non-`oc-sent-` placeholder
 
-**Never put in the engine:** `TEAMVER_INTERNAL_API_KEY`, user password, user JWT.
+**Never put in the engine:** `TEAMVER_INTERNAL_API_KEY`, user password, user JWT (`eyJ…`).
 
-Then:
+Then (inside OpenClaw **gateway exec** if the token is a sentinel):
 
 ```bash
 python -m teamver_agent_sdk whoami
+python -m teamver_agent_sdk doctor
+python -m teamver_agent_sdk channels
 ```
 
 ## Requirements
@@ -39,7 +42,7 @@ pip install teamver-agent-sdk
 Pin a version:
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.7'
+pip install 'teamver-agent-sdk==0.6.8'
 ```
 
 Dependencies installed automatically:

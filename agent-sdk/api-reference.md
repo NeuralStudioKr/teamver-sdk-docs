@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` (0.6.7+ token-only identity via `/ai-agents/me`)  
+**Package:** `teamver-agent-sdk` (0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.

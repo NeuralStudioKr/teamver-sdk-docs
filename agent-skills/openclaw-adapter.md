@@ -2,7 +2,7 @@
 
 Wraps [`teamver-agent-skills`](./README.md) for **OpenClaw** tool registration and dispatch so the engine can talk to **Teamver Main** (channel, Drive, DM) and **Teamver Mail**.
 
-PyPI: [teamver-openclaw-adapter](https://pypi.org/project/teamver-openclaw-adapter/) **0.1.1** (needs `teamver-agent-sdk>=0.6.7` and `teamver-agent-skills>=0.1.2`).
+PyPI: [teamver-openclaw-adapter](https://pypi.org/project/teamver-openclaw-adapter/) **0.1.1** (needs `teamver-agent-sdk>=0.6.8` and `teamver-agent-skills>=0.1.2`).
 
 This is a **Python tool bridge**, not an OpenClaw/Codex `SKILL.md` package. See [terminology](../terminology.md).
 
@@ -13,16 +13,16 @@ Trust / tokens: Agents Console injects `openclaw.env`. **ACL is policy; `tv_ak_*
 ## Install (inside the OpenClaw / agent image)
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.7' 'teamver-openclaw-adapter==0.1.1'
+pip install 'teamver-agent-sdk==0.6.8' 'teamver-openclaw-adapter==0.1.1'
 ```
 
 ## Env the engine should already have
 
-Injected by VM Manager into `openclaw.env`. **A human only needs to supply `TEAMVER_AGENT_TOKEN` (`tv_ak_*`).** Workspace/agent ids come from `GET /api/v2/ai-agents/me`.
+Injected by VM Manager into `openclaw.env`. **A human only needs to supply `TEAMVER_AGENT_TOKEN` (`tv_ak_*` or OpenClaw `oc-sent-v….end`).** Workspace/agent ids come from `GET /api/v2/ai-agents/me`.
 
 | env | prefix | Required |
 |-----|--------|----------|
-| `TEAMVER_AGENT_TOKEN` | `tv_ak_*` | **yes** — channel / DM / Drive / jobs |
+| `TEAMVER_AGENT_TOKEN` | `tv_ak_*` or `oc-sent-v….end` | **yes** — channel / DM / Drive / jobs |
 | `TEAMVER_MAIN_API_BASE` | URL | staging/private only (prod default `https://api.teamver.com`) |
 | `TEAMVER_MAIL_AGENT_TOKEN` | `tv_agent_*` | mail only |
 | `TEAMVER_MAIL_API_BASE` | URL | mail only |
