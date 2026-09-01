@@ -4,6 +4,12 @@ Public docs mirror. Package changelogs may also ship on PyPI / in the source rep
 
 ## teamver-agent-skills
 
+### [0.1.1] - 2026-09-02
+
+- `teamver_whoami` — discover workspace/agent/channels/drives from `tv_ak_*`.
+- `teamver_report` — post to the default report channel (optional `channel_id`).
+- Catalog 24 → 26 tools. Call `teamver_whoami` before asking a human for W-/AG2-/CH- ids.
+
 ### [0.1.0] - 2026-08-04
 
 - Initial release: SkillRegistry, SkillExecutor, default skill catalog.

@@ -6,7 +6,9 @@ PyPI: [teamver-agent-sdk](https://pypi.org/project/teamver-agent-sdk/)
 
 ## Docs
 
-- [Installation](./installation.md)
+- [Installation](./installation.md) — **start here** (token only; do not ask for W-/AG2-)
+- [OpenClaw](./openclaw.md) — what the engine should ask a human
+- [Quick start](./quickstart.md)
 - [Quick start](./quickstart.md)
 - [Configuration](./configuration.md)
 - [API reference](./api-reference.md)
@@ -45,8 +47,8 @@ import asyncio
 from teamver_agent_sdk import TeamverAgent
 
 async def main():
-    agent = TeamverAgent()  # from env
-    await agent.report(text="Deploy finished ✅", channel_id="CH-…")
+    agent = await TeamverAgent.connect()
+    await agent.report(text="Deploy finished ✅")
     await agent.aclose()
 
 asyncio.run(main())

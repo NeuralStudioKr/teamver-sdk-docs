@@ -1,13 +1,14 @@
 # Teamver Agent SDK — AI Agent Guide
 
 **Audience:** agent runtimes, VM-hosted agents, and LLM automation that **report to Teamver channels** and/or **reply via Teamver Mail** with one config surface.  
-**Package:** `teamver-agent-sdk` v0.6.5 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**.  
+**Package:** `teamver-agent-sdk` v0.6.6 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`).  
 **Drive/DM:** see [API reference](./api-reference.md) (DM / Drive sections).
 
 ## 변경 이력
 
 | 일시 (KST) | 변경 내용 |
 |---|-----|
+| 2026-09-02 | 0.6.6: token-only identity; do not ask humans for W-/AG2- |
 | 2026-08-28 | Bible 정합: `W-`/`AG2-`, ACL≠`tv_ak_`, `TEAMVER_AGENTS_API_BASE`, `tv_cp_` 비사용 |
 
 ---
@@ -20,7 +21,7 @@
 | **teamver-mail-agent** | Mail BE only (inbox loop, processing, reply) | `tv_agent_*` |
 | **teamver-sdk-core** | Shared HTTP transport / errors (dependency) | — |
 
-Use **this SDK** when the runtime already has `TEAMVER_WORKSPACE_ID`, `TEAMVER_AGENT_ID`, and one or both agent tokens injected. Use **teamver-mail-agent** directly if you only need mail and want fewer layers.
+Use **this SDK** when the runtime has `TEAMVER_AGENT_TOKEN` (`tv_ak_*`). Workspace and agent ids are optional. Use **teamver-mail-agent** directly if you only need mail and want fewer layers.
 
 ---
 
@@ -29,8 +30,10 @@ Use **this SDK** when the runtime already has `TEAMVER_WORKSPACE_ID`, `TEAMVER_A
 Required for any use:
 
 ```bash
-export TEAMVER_WORKSPACE_ID="W-…"
-export TEAMVER_AGENT_ID="AG2-…"
+export TEAMVER_AGENT_TOKEN="tv_ak_…"
+# optional — discovered from the token if omitted:
+# export TEAMVER_WORKSPACE_ID="W-…"
+# export TEAMVER_AGENT_ID="AG2-…"
 ```
 
 Channel surface (collab + SSE events). API hosts default when unset:

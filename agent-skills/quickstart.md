@@ -3,9 +3,10 @@
 ## 1. Env (same as agent-sdk)
 
 ```bash
-export TEAMVER_WORKSPACE_ID="W-…"
-export TEAMVER_AGENT_ID="AG2-…"
 export TEAMVER_AGENT_TOKEN="tv_ak_…"
+# optional — discovered if omitted:
+# export TEAMVER_WORKSPACE_ID="W-…"
+# export TEAMVER_AGENT_ID="AG2-…"
 # optional mail:
 export TEAMVER_MAIL_AGENT_TOKEN="tv_agent_…"
 ```
@@ -14,17 +15,18 @@ export TEAMVER_MAIL_AGENT_TOKEN="tv_agent_…"
 
 ```python
 import asyncio
-from teamver_agent_sdk import TeamverAgent, TeamverAgentConfig
+from teamver_agent_sdk import TeamverAgent
 from teamver_agent_skills import SkillExecutor, SkillContext, build_default_registry
 
 async def main():
-    agent = TeamverAgent(TeamverAgentConfig.from_env())
+    agent = await TeamverAgent.connect()
     registry = build_default_registry()
     executor = SkillExecutor(registry, SkillContext(agent=agent))
 
     # List registered skill names
     print([s.name for s in registry.list_skills()])
 
+    result = await executor.execute("teamver_whoami", {})
     result = await executor.execute("teamver_channel_list", {})
     print(result)
 

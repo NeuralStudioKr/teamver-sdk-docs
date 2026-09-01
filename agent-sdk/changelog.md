@@ -2,6 +2,15 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.6] - 2026-09-02
+
+### Added
+- Token-only setup: `TEAMVER_AGENT_TOKEN` is the only required human secret. Workspace/agent ids come from `GET /api/v2/ai-agents/me`.
+- `TeamverAgent.connect()`, `whoami()`, `describe_setup()`, CLI `python -m teamver_agent_sdk required-env|whoami|doctor`.
+- Channel list uses ACL `accessible-channels`. `report()` can omit `channel_id` after identity is resolved.
+- Tools: `teamver_whoami`, `teamver_report` (`teamver-agent-skills` 0.1.1).
+- Docs: [openclaw.md](./openclaw.md).
+
 ## [0.6.5] - 2026-08-28
 
 ### Changed

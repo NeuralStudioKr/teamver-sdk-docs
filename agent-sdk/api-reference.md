@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` (0.6.5+ `TEAMVER_AGENTS_API_BASE` alias)  
+**Package:** `teamver-agent-sdk` (0.6.6+ token-only identity via `/ai-agents/me`)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
@@ -11,7 +11,9 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 
 | Member | Type | Notes |
 |--------|------|--------|
-| `config` | `TeamverAgentConfig` | workspace_id, agent_id, tokens |
+| `config` | `TeamverAgentConfig` | ids may be empty until `connect()` / `ensure_identity()` |
+| `connect()` | classmethod async | `from_env` + `GET /ai-agents/me` |
+| `whoami()` | async → dict | workspace, agent, ACL channels/drives |
 | `channel` | `ChannelClient` | lazy; requires channel env |
 | `dm` | `DmClient` | lazy; same token as channel |
 | `drive` | `DriveClient` | lazy; same token as channel |
@@ -25,7 +27,7 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 | Parameter | Required | Effect |
 |-----------|----------|--------|
 | `text` | yes | Message body (channel) / `body_text` (mail) |
-| `channel_id` | one of channel / mail | `channel.post_message` |
+| `channel_id` | no after `connect()` | default report channel from `/me`; else required |
 | `reply_to_message_id` | one of channel / mail | `mail.reply` |
 | `subject` | yes if mail reply | mail subject |
 | `cc` | no | mail CC list |
@@ -44,16 +46,18 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 
 | Field / env | Description |
 |-------------|-------------|
-| `workspace_id` / `TEAMVER_WORKSPACE_ID` | Workspace id (`W-…`) |
-| `agent_id` / `TEAMVER_AGENT_ID` | Agent id (`AG2-…`) |
+| `workspace_id` / `TEAMVER_WORKSPACE_ID` | Optional. Discovered from token (`W-…`) |
+| `agent_id` / `TEAMVER_AGENT_ID` | Optional. Discovered from token (`AG2-…`) |
 | `main_api_base` / `TEAMVER_MAIN_API_BASE` | Main host (no `/api`) |
-| `channel_token` / `TEAMVER_AGENT_TOKEN` | `tv_ak_*` |
+| `channel_token` / `TEAMVER_AGENT_TOKEN` | **Required** `tv_ak_*` |
 | `agent_api_base` / `TEAMVER_AGENT_API_BASE` | Agents BE. Fallback `TEAMVER_AGENTS_API_BASE` (0.6.5+) |
 | `mail_api_base` / `TEAMVER_MAIL_API_BASE` | Mail BE host |
 | `mail_agent_token` / `TEAMVER_MAIL_AGENT_TOKEN` | `tv_agent_*` |
+| `control_plane_token` / `TEAMVER_CONTROL_PLANE_TOKEN` | Identity fallback (`tv_cp_*`) |
 | `channel_enabled` | property: base + token set |
 | `mail_enabled` | property: mail base + token set |
-| `from_env()` | load required ids + optional tokens |
+| `from_env()` / `from_token()` | load token; ids optional |
+| `ensure_identity()` | `GET /api/v2/ai-agents/me` |
 
 ---
 
@@ -61,13 +65,14 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 
 | SDK method | HTTP | Body / query |
 |------------|------|----------------|
+| `list_channels()` | GET `/ai-agents/me/accessible-channels` (fallback workspace accessible-channels, then `/collab/channels`) | — |
 | `post_message(channel_id, text, mentions=, reply_to_message_id=)` | POST `/workspace/{ws}/channels/{id}/messages` | JSON `{text, mentions?, reply_to_message_id?}` |
 | `read_messages(channel_id, limit=50, cursor=)` | GET same path | `limit`, `cursor` |
 | `react(channel_id, message_id, emoji)` | POST `…/messages/{message_id}/reactions` | `{emoji}` |
 
 Auth: Bearer `tv_ak_*`.
 
-Agent tools: `teamver_channel_list` / `post` / `read` / `react`.
+Agent tools: `teamver_whoami` / `teamver_report` / `teamver_channel_list` / `post` / `read` / `react`.
 
 ---
 
