@@ -5,15 +5,17 @@ Public documentation for Teamver **agent** Python SDKs published on PyPI.
 > Scope: agent 런타임에 필요한 공개 패키지 (`agent-sdk` · `mail-agent` · `sdk-core` · **agent-skills** · OpenClaw/Hermes adapters).  
 > App/BE용 SDK(`teamver-app-sdk` 등)는 PyPI·문서 공개 대상이 아닙니다.
 
+**Source of truth:** package source is [`ns-teamver-packages`](https://github.com/NeuralStudioKr/ns-teamver-packages) → PyPI. `ns-teamver-agents` does **not** carry a second `teamver-agent-sdk` tree; OpenClaw images `pip install` pinned versions.
+
 Publisher: [pypi.org/user/neuralstudio.kr](https://pypi.org/user/neuralstudio.kr/)
 
 | PyPI package | Docs | Latest |
 |--------------|------|--------|
-| [`teamver-agent-sdk`](https://pypi.org/project/teamver-agent-sdk/) | [agent-sdk/](./agent-sdk/) | 0.6.5 |
+| [`teamver-agent-sdk`](https://pypi.org/project/teamver-agent-sdk/) | [agent-sdk/](./agent-sdk/) | 0.6.7 |
 | [`teamver-mail-agent`](https://pypi.org/project/teamver-mail-agent/) | [mail-agent/](./mail-agent/) | 0.3.1 |
 | [`teamver-sdk-core`](https://pypi.org/project/teamver-sdk-core/) | [sdk-core/](./sdk-core/) | 0.1.2 |
-| [`teamver-agent-skills`](https://pypi.org/project/teamver-agent-skills/) | [agent-skills/](./agent-skills/) | 0.1.0 |
-| [`teamver-openclaw-adapter`](https://pypi.org/project/teamver-openclaw-adapter/) | [agent-skills/openclaw-adapter.md](./agent-skills/openclaw-adapter.md) | 0.1.0 |
+| [`teamver-agent-skills`](https://pypi.org/project/teamver-agent-skills/) | [agent-skills/](./agent-skills/) | 0.1.2 |
+| [`teamver-openclaw-adapter`](https://pypi.org/project/teamver-openclaw-adapter/) | [agent-skills/openclaw-adapter.md](./agent-skills/openclaw-adapter.md) | 0.1.1 |
 | [`teamver-hermes-adapter`](https://pypi.org/project/teamver-hermes-adapter/) | [agent-skills/hermes-adapter.md](./agent-skills/hermes-adapter.md) | 0.1.0 |
 
 **Start here if someone said “skill 설치”:** [terminology.md](./terminology.md) — Teamver Python skills ≠ OpenClaw/Codex `SKILL.md`.

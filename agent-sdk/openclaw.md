@@ -9,7 +9,7 @@ pip install teamver-agent-sdk
 python -c "import teamver_agent_sdk as m; print(m.__version__)"
 ```
 
-Need **0.6.6+**. 0.6.5 still required humans to paste workspace/agent ids.
+Need **0.6.7+** (token-only identity since 0.6.6; 0.6.7 drops `/collab/channels` for engines). 0.6.5 still required humans to paste workspace/agent ids.
 
 ## Ask the human for this (and only this)
 
@@ -43,4 +43,8 @@ await agent.report(text="connected")
 await agent.drive.list_files(limit=20)
 ```
 
-Tools: `teamver_whoami` → `teamver_channel_list` → `teamver_report` / `teamver_drive_list_files`.
+## Bake / OpenClaw image
+
+The OpenClaw engine image installs these packages from **PyPI** (`teamver-agent-sdk==0.6.7`, `teamver-openclaw-adapter==0.1.1`). There is no SDK source tree inside `ns-teamver-agents`.
+
+Channel list is `GET /api/v2/ai-agents/me/accessible-channels` (ACL). Engines never call `/collab/channels` (that route is for a human JWT).

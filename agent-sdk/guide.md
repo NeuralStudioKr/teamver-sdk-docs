@@ -1,13 +1,14 @@
 # Teamver Agent SDK — AI Agent Guide
 
 **Audience:** agent runtimes, VM-hosted agents, and LLM automation that **report to Teamver channels** and/or **reply via Teamver Mail** with one config surface.  
-**Package:** `teamver-agent-sdk` v0.6.6 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`).  
+**Package:** `teamver-agent-sdk` v0.6.7 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`).  
 **Drive/DM:** see [API reference](./api-reference.md) (DM / Drive sections).
 
 ## 변경 이력
 
 | 일시 (KST) | 변경 내용 |
 |---|-----|
+| 2026-09-02 | 0.6.7: engine channel list never uses `/collab/channels` |
 | 2026-09-02 | 0.6.6: token-only identity; do not ask humans for W-/AG2- |
 | 2026-08-28 | Bible 정합: `W-`/`AG2-`, ACL≠`tv_ak_`, `TEAMVER_AGENTS_API_BASE`, `tv_cp_` 비사용 |
 
@@ -65,11 +66,11 @@ Optional tuning (constructor on `TeamverAgentConfig`):
 - `max_retries` / `retry_backoff_seconds` — HTTP 429, 502, 503, 504 and transport errors on **Main** `AgentHTTP` only
 
 ```python
-from teamver_agent_sdk import TeamverAgent, TeamverAgentConfig
+from teamver_agent_sdk import TeamverAgent
 
-agent = TeamverAgent(TeamverAgentConfig.from_env())
-# or
-agent = TeamverAgent()  # same as from_env()
+agent = await TeamverAgent.connect()
+# or, if ids are already in env:
+# agent = TeamverAgent()
 ```
 
 Always close when done:

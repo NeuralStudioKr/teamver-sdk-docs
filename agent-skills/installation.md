@@ -33,7 +33,7 @@ pip install "teamver-agent-skills[hermes]"
 Pin versions (example):
 
 ```bash
-pip install 'teamver-agent-skills==0.1.0' 'teamver-openclaw-adapter==0.1.0'
+pip install 'teamver-agent-skills==0.1.2' 'teamver-openclaw-adapter==0.1.1'
 ```
 
 Dependencies installed automatically:

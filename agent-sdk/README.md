@@ -9,7 +9,6 @@ PyPI: [teamver-agent-sdk](https://pypi.org/project/teamver-agent-sdk/)
 - [Installation](./installation.md) — **start here** (token only; do not ask for W-/AG2-)
 - [OpenClaw](./openclaw.md) — what the engine should ask a human
 - [Quick start](./quickstart.md)
-- [Quick start](./quickstart.md)
 - [Configuration](./configuration.md)
 - [API reference](./api-reference.md)
 - [Agent guide](./guide.md)

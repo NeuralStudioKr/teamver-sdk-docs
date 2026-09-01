@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` (0.6.6+ token-only identity via `/ai-agents/me`)  
+**Package:** `teamver-agent-sdk` (0.6.7+ token-only identity via `/ai-agents/me`)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
@@ -65,7 +65,7 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 
 | SDK method | HTTP | Body / query |
 |------------|------|----------------|
-| `list_channels()` | GET `/ai-agents/me/accessible-channels` (fallback workspace accessible-channels, then `/collab/channels`) | — |
+| `list_channels()` | GET `/ai-agents/me/accessible-channels` (404 → workspace `/ai-agents/{id}/accessible-channels`). **Never** `/collab/channels`. | — |
 | `post_message(channel_id, text, mentions=, reply_to_message_id=)` | POST `/workspace/{ws}/channels/{id}/messages` | JSON `{text, mentions?, reply_to_message_id?}` |
 | `read_messages(channel_id, limit=50, cursor=)` | GET same path | `limit`, `cursor` |
 | `react(channel_id, message_id, emoji)` | POST `…/messages/{message_id}/reactions` | `{emoji}` |

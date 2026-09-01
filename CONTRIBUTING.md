@@ -4,7 +4,7 @@ Thanks for helping improve Teamver SDK documentation.
 
 ## Scope
 
-This repository is **docs and examples only**. SDK source lives in a private monorepo and is not accepted here as patches.
+This repository is **docs and examples only**. SDK source lives in [`ns-teamver-packages`](https://github.com/NeuralStudioKr/ns-teamver-packages) and is published to PyPI. Do not document a second copy under `ns-teamver-agents/packages`.
 
 Please open issues or PRs for:
 

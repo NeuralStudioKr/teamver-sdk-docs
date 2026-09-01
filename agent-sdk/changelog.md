@@ -2,6 +2,12 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.7] - 2026-09-02
+
+### Changed
+- `ChannelClient.list_channels()` never calls `/collab/channels` (human JWT). ACL only: `/ai-agents/me/accessible-channels`, then workspace accessible-channels on 404.
+- Source of truth is this PyPI package (`ns-teamver-packages`). OpenClaw images `pip install` a pin; there is no second tree in `ns-teamver-agents`.
+
 ## [0.6.6] - 2026-09-02
 
 ### Added

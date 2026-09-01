@@ -4,6 +4,10 @@ Public docs mirror. Package changelogs may also ship on PyPI / in the source rep
 
 ## teamver-agent-skills
 
+### [0.1.2] - 2026-09-02
+
+- Preserve HTTP status on skill failure so OpenClaw can return 401 vs 404 as tool results.
+
 ### [0.1.1] - 2026-09-02
 
 - `teamver_whoami` — discover workspace/agent/channels/drives from `tv_ak_*`.
@@ -16,6 +20,12 @@ Public docs mirror. Package changelogs may also ship on PyPI / in the source rep
 - `AgentToolAdapter` compat for `teamver-agent-sdk`.
 
 ## teamver-openclaw-adapter
+
+### [0.1.1] - 2026-09-02
+
+- OpenAI function envelopes, `TOOL_NAMES`, `from_env()`.
+- Dispatch maps 401/403 → `MAIN_UNAUTHORIZED`, 404 → `MAIN_PATH_NOT_FOUND`.
+- Bake SSOT is PyPI (not `ns-teamver-agents/packages`).
 
 ### [0.1.0] - 2026-08-04
 
