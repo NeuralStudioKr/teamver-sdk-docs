@@ -12,6 +12,9 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 ### Changed
 - Staging API host documented as `https://stg-api.teamver.com`. `/me` 404 explains stale deploy vs wrong host.
 
+### Docs
+- [api-reference.md](./api-reference.md) — `GET /ai-agents/me` response example (200 / 401).
+
 ## [0.6.7] - 2026-09-02
 
 ### Changed

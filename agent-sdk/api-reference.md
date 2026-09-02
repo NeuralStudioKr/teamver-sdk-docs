@@ -76,6 +76,85 @@ This is **not** an ns-teamver-agents route. Agents fallback is `GET /api/v2/engi
 
 Missing/invalid Bearer → **401** `invalid_token`. A **404** on staging means the live container has not been redeployed (`deploy.sh --staging`), not that the token is wrong.
 
+### Response example
+
+`GET {TEAMVER_MAIN_API_BASE}/api/v2/ai-agents/me`  
+`Authorization: Bearer tv_ak_…`
+
+**200** — N27 (`ns-teamver-be` `ai_agent_me_service.build_agent_me_response`). `channels.items` is the read-effective list (same as `/ai-agents/me/accessible-channels`), not a raw ACL dump.
+
+```json
+{
+  "workspace_id": "W-1a2b3c",
+  "agent_id": "AG2-9f8e7d",
+  "name": "한돌",
+  "handle": "handol",
+  "scopes": ["messages:read", "messages:write", "channels:read"],
+  "channels": {
+    "items": [
+      {"channel_id": "CH-aaa111", "name": "한돌ch2", "visibility": "public"},
+      {"channel_id": "CH-bbb222", "name": "한돌ch1", "visibility": "public"}
+    ],
+    "total": 2
+  },
+  "drives": {
+    "items": [
+      {
+        "shared_drive_id": "SD-ccc333",
+        "name": "한돌 Drive",
+        "can_read": true,
+        "can_write": true
+      }
+    ],
+    "total": 1
+  },
+  "dm": {"applied_enabled": true},
+  "report_channel_id": "CH-bbb222"
+}
+```
+
+Empty ACL still returns ids. `report_channel_id` and `handle` may be `null`. `channels.items` / `drives.items` may be `[]`.
+
+**401** — missing header, unknown/revoked token, user JWT. Not 404.
+
+```json
+{
+  "error": {
+    "code": "invalid_token",
+    "message": "Missing or invalid agent token",
+    "retryable": false,
+    "request_id": "req_…",
+    "details": {}
+  }
+}
+```
+
+Sibling **200** examples:
+
+`GET /api/v2/ai-agents/me/accessible-channels`
+
+```json
+{
+  "workspace_id": "W-1a2b3c",
+  "agent_id": "AG2-9f8e7d",
+  "items": [
+    {"channel_id": "CH-aaa111", "name": "한돌ch2", "visibility": "public"},
+    {"channel_id": "CH-bbb222", "name": "한돌ch1", "visibility": "public"}
+  ],
+  "total": 2
+}
+```
+
+`GET /api/v2/ai-agents/me/report-channel`
+
+```json
+{
+  "workspace_id": "W-1a2b3c",
+  "agent_id": "AG2-9f8e7d",
+  "channel_id": "CH-bbb222"
+}
+```
+
 ---
 
 ## Channel — `ChannelClient`

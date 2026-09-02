@@ -35,6 +35,46 @@ python -m teamver_agent_sdk doctor
 python -m teamver_agent_sdk channels
 ```
 
+### GET `/api/v2/ai-agents/me` response example
+
+Main BE, not Agents. `Authorization: Bearer tv_ak_…` (or a sentinel that Gateway substitutes). Full field notes: [api-reference](./api-reference.md#identity--get-ai-agentsme-main-be).
+
+**200**
+
+```json
+{
+  "workspace_id": "W-1a2b3c",
+  "agent_id": "AG2-9f8e7d",
+  "name": "한돌",
+  "handle": "handol",
+  "scopes": ["messages:read", "messages:write", "channels:read"],
+  "channels": {
+    "items": [
+      {"channel_id": "CH-aaa111", "name": "한돌ch2", "visibility": "public"},
+      {"channel_id": "CH-bbb222", "name": "한돌ch1", "visibility": "public"}
+    ],
+    "total": 2
+  },
+  "drives": {
+    "items": [
+      {
+        "shared_drive_id": "SD-ccc333",
+        "name": "한돌 Drive",
+        "can_read": true,
+        "can_write": true
+      }
+    ],
+    "total": 1
+  },
+  "dm": {"applied_enabled": true},
+  "report_channel_id": "CH-bbb222"
+}
+```
+
+**401** `{ "error": { "code": "invalid_token", "message": "Missing or invalid agent token", "retryable": false, "request_id": "req_…", "details": {} } }`
+
+CLI `whoami` prints this object (plus SDK `source`). If staging returns **404**, the live Main container does not have the route yet.
+
 Do **not** copy a local `teamver_channels.py` that reimplements ACL fallbacks. Channel list lives in `ChannelClient.list_channels()`. Official script: [examples/openclaw/list_channels.py](https://github.com/NeuralStudioKr/ns-teamver-packages/blob/main/examples/openclaw/list_channels.py).
 
 ```python
