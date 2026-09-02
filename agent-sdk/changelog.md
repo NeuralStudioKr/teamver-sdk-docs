@@ -2,6 +2,13 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.9] - 2026-09-02
+
+### Changed
+- Drive list/download-url use `GET /api/v2/ai-agents/me/drives/{id}/files` and `…/assets/{id}/download-url`. Engines must not call human JWT `GET /api/drive/list`.
+- `list_files()` with omitted/`personal` drive_id uses the sole ACL shared drive.
+- CLI `files`.
+
 ## [0.6.8] - 2026-09-02
 
 ### Added

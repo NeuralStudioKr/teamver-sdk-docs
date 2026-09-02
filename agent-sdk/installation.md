@@ -26,6 +26,7 @@ Then (inside OpenClaw **gateway exec** if the token is a sentinel):
 python -m teamver_agent_sdk whoami
 python -m teamver_agent_sdk doctor
 python -m teamver_agent_sdk channels
+python -m teamver_agent_sdk files
 ```
 
 ## Requirements
@@ -42,7 +43,7 @@ pip install teamver-agent-sdk
 Pin a version:
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.8'
+pip install 'teamver-agent-sdk==0.6.9'
 ```
 
 Dependencies installed automatically:

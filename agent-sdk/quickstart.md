@@ -36,7 +36,7 @@ async def main():
     channels = await agent.channel.list_channels()  # ACL accessible-channels
     await agent.report(text="Hello from agent")     # default report channel
 
-    files = await agent.drive.list_files(drive_id="personal", limit=20)
+    files = await agent.drive.list_files(limit=20)
     threads = await agent.dm.list_threads(limit=10)
 
     await agent.aclose()

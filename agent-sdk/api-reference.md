@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` (0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
+**Package:** `teamver-agent-sdk` (0.6.9+ Drive `/me/drives`; 0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
@@ -189,11 +189,11 @@ Agent tools: `teamver_dm_list_threads` / `open_thread` / `read_messages` / `post
 
 | SDK method | HTTP / 동작 |
 |------------|-------------|
-| `list_shared_drives()` | GET `/api/v2/shared-drive` |
-| `list_files(drive_id=, …)` | GET `/api/drive/list` (+ personal recent 폴백) |
-| `download_url(asset_id, …)` | GET `/api/drive/asset/{id}/download-url` |
+| `list_shared_drives()` | GET `/ai-agents/me` drives (ACL) |
+| `list_files(drive_id=, …)` | GET `/ai-agents/me/drives/{id}/files` |
+| `download_url(asset_id, …)` | GET `/ai-agents/me/drives/{id}/assets/{asset_id}/download-url` |
 | `download(asset_id, dest_path, …)` | URL fetch → 로컬 파일 |
-| `upload(local_path=, …)` | upload-request → PUT → confirm |
+| `upload(local_path=, …)` | upload-request → PUT → confirm (human path until N29) |
 
 Agent tools: `teamver_drive_list_drives` / `list_files` / `download_url` / `download` / `upload`.
 

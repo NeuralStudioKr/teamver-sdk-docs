@@ -1,13 +1,14 @@
 # Teamver Agent SDK — AI Agent Guide
 
 **Audience:** agent runtimes, VM-hosted agents, and LLM automation that **report to Teamver channels** and/or **reply via Teamver Mail** with one config surface.  
-**Package:** `teamver-agent-sdk` v0.6.8 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
+**Package:** `teamver-agent-sdk` v0.6.9 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
 **Drive/DM:** see [API reference](./api-reference.md) (DM / Drive sections).
 
 ## 변경 이력
 
 | 일시 (KST) | 변경 내용 |
 |---|-----|
+| 2026-09-02 | 0.6.9: Drive files via `/ai-agents/me/drives/…` · CLI `files` |
 | 2026-09-02 | 0.6.8: OpenClaw managed secret sentinel · CLI `channels` · staging host `stg-api.teamver.com` |
 | 2026-09-02 | 0.6.7: engine channel list never uses `/collab/channels` |
 | 2026-09-02 | 0.6.6: token-only identity; do not ask humans for W-/AG2- |
@@ -181,9 +182,8 @@ agent tools: `teamver_dm_list_threads` / `open_thread` / `read_messages` / `post
 
 ```python
 drives = await agent.drive.list_shared_drives()
-files = await agent.drive.list_files(drive_id="personal", limit=50)
-await agent.drive.download(asset_id, "/tmp/file.bin", drive_id="personal")
-await agent.drive.upload(local_path="/tmp/out.pdf", drive_id="personal")
+files = await agent.drive.list_files(limit=50)  # sole ACL drive, or pass drive_id="SD-…"
+await agent.drive.download(asset_id, "/tmp/file.bin")
 ```
 
 agent tools: `teamver_drive_list_drives` / `list_files` / `download_url` / `download` / `upload`.  
