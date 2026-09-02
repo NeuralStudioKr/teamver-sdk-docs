@@ -5,11 +5,11 @@ This is the page an engine should follow after installing from PyPI.
 ## Install
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.9'
+pip install 'teamver-agent-sdk==0.6.10'
 python -c "import teamver_agent_sdk as m; print(m.__version__)"
 ```
 
-Need **0.6.9+** for Drive file list (`/ai-agents/me/drives/…`). 0.6.8+ for OpenClaw Secret Store sentinels. 0.6.6+ is token-only identity. 0.6.7 drops `/collab/channels` for engines.
+Need **0.6.10+** for DM (`/ai-agents/me/dm/…`) and channel POST `body`. **0.6.9+** for Drive file list (`/ai-agents/me/drives/…`). 0.6.8+ for OpenClaw Secret Store sentinels. 0.6.6+ is token-only identity. 0.6.7 drops `/collab/channels` for engines.
 
 ## Ask the human for this (and only this)
 
@@ -89,7 +89,7 @@ await agent.drive.list_files(limit=20)
 
 ## Bake / OpenClaw image
 
-The OpenClaw engine image installs these packages from **PyPI** (`teamver-agent-sdk==0.6.9`, `teamver-openclaw-adapter==0.1.1`). There is no SDK source tree inside `ns-teamver-agents`.
+The OpenClaw engine image installs these packages from **PyPI** (`teamver-agent-sdk==0.6.10`, `teamver-openclaw-adapter==0.1.1`). There is no SDK source tree inside `ns-teamver-agents`.
 
 Channel list is `GET /api/v2/ai-agents/me/accessible-channels` (ACL). Engines never call `/collab/channels`.
 

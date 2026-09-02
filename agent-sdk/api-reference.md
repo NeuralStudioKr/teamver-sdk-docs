@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` (0.6.9+ Drive `/me/drives`; 0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
+**Package:** `teamver-agent-sdk` (0.6.10+ DM `/me/dm` + channel `body`; 0.6.9+ Drive `/me/drives`; 0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
@@ -162,7 +162,7 @@ Sibling **200** examples:
 | SDK method | HTTP | Body / query |
 |------------|------|----------------|
 | `list_channels()` | GET `/ai-agents/me/accessible-channels` (404 → workspace `/ai-agents/{id}/accessible-channels`). **Never** `/collab/channels`. | — |
-| `post_message(channel_id, text, mentions=, reply_to_message_id=)` | POST `/workspace/{ws}/channels/{id}/messages` | JSON `{text, mentions?, reply_to_message_id?}` |
+| `post_message(channel_id, text, mentions=, reply_to_message_id=)` | POST `/workspace/{ws}/channels/{id}/messages` | JSON `{body, text, mentions?, parent_message_id?}` (`body` is required by Main) |
 | `read_messages(channel_id, limit=50, cursor=)` | GET same path | `limit`, `cursor` |
 | `react(channel_id, message_id, emoji)` | POST `…/messages/{message_id}/reactions` | `{emoji}` |
 
@@ -176,10 +176,12 @@ Agent tools: `teamver_whoami` / `teamver_report` / `teamver_channel_list` / `pos
 
 | SDK method | HTTP |
 |------------|------|
-| `list_threads(limit=, cursor=)` | GET `/workspace/{ws}/dm/threads` |
-| `open_thread(peer_user_id)` | POST `/workspace/{ws}/dm/threads` `{peer_user_id}` |
+| `list_threads(limit=, cursor=)` | GET `/ai-agents/me/dm/threads` |
+| `open_thread(peer_user_id)` | POST `/ai-agents/me/dm/threads` `{peer_user_id}` |
+| `search_users(q=)` | GET `/ai-agents/me/directory/users?q=` |
+| `open_thread_by_email(email)` | search → exact email → `open_thread` |
 | `read_messages(thread_id, …)` | GET `…/dm/threads/{id}/messages` |
-| `post_message(thread_id, text, …)` | POST same path `{text}` |
+| `post_message(thread_id, text, …)` | POST same path `{text, body}` |
 
 Agent tools: `teamver_dm_list_threads` / `open_thread` / `read_messages` / `post_message`.
 

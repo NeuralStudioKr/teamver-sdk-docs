@@ -1,13 +1,14 @@
 # Teamver Agent SDK — AI Agent Guide
 
 **Audience:** agent runtimes, VM-hosted agents, and LLM automation that **report to Teamver channels** and/or **reply via Teamver Mail** with one config surface.  
-**Package:** `teamver-agent-sdk` v0.6.9 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
+**Package:** `teamver-agent-sdk` v0.6.10 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
 **Drive/DM:** see [API reference](./api-reference.md) (DM / Drive sections).
 
 ## 변경 이력
 
 | 일시 (KST) | 변경 내용 |
 |---|-----|
+| 2026-09-02 | 0.6.10: DM `/ai-agents/me/dm` · channel POST `body` · CLI `dm`/`drive-list` |
 | 2026-09-02 | 0.6.9: Drive files via `/ai-agents/me/drives/…` · CLI `files` |
 | 2026-09-02 | 0.6.8: OpenClaw managed secret sentinel · CLI `channels` · staging host `stg-api.teamver.com` |
 | 2026-09-02 | 0.6.7: engine channel list never uses `/collab/channels` |
@@ -172,9 +173,12 @@ For admin-only collab extras beyond channel/DM use **teamver-be-sdk** `collab_v2
 ```python
 threads = await agent.dm.list_threads(limit=20)
 opened = await agent.dm.open_thread("USR-…")
+# or: opened = await agent.dm.open_thread_by_email("user@example.com")
 msgs = await agent.dm.read_messages(opened["id"], limit=50)
 await agent.dm.post_message(opened["id"], "hello from agent")
 ```
+
+HTTP: `GET/POST /api/v2/ai-agents/me/dm/threads` (not human `/workspace/{ws}/dm/threads`).
 
 agent tools: `teamver_dm_list_threads` / `open_thread` / `read_messages` / `post_message`.
 

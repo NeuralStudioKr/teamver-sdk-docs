@@ -2,6 +2,17 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.10] - 2026-09-02
+
+### Changed
+- Channel `post_message()` sends `{body, text}` (Main `SendMessageDTO` requires `body`).
+- DM uses `GET/POST /api/v2/ai-agents/me/dm/threads`. Human `/workspace/{ws}/dm/threads` stays JWT-only.
+
+### Added
+- `search_users` / `open_thread_by_email`. `agent.directory` alias.
+- CLI `dm` / `dm-list`, `drive-list`.
+- 401 hint: `/ai-agents/me` vs human JWT surface mismatch.
+
 ## [0.6.9] - 2026-09-02
 
 ### Changed

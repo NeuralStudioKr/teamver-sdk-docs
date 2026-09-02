@@ -11,7 +11,7 @@ Publisher: [pypi.org/user/neuralstudio.kr](https://pypi.org/user/neuralstudio.kr
 
 | PyPI package | Docs | Latest |
 |--------------|------|--------|
-| [`teamver-agent-sdk`](https://pypi.org/project/teamver-agent-sdk/) | [agent-sdk/](./agent-sdk/) | 0.6.9 |
+| [`teamver-agent-sdk`](https://pypi.org/project/teamver-agent-sdk/) | [agent-sdk/](./agent-sdk/) | 0.6.10 |
 | [`teamver-mail-agent`](https://pypi.org/project/teamver-mail-agent/) | [mail-agent/](./mail-agent/) | 0.3.1 |
 | [`teamver-sdk-core`](https://pypi.org/project/teamver-sdk-core/) | [sdk-core/](./sdk-core/) | 0.1.2 |
 | [`teamver-agent-skills`](https://pypi.org/project/teamver-agent-skills/) | [agent-skills/](./agent-skills/) | 0.1.2 |

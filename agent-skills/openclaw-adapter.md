@@ -2,7 +2,7 @@
 
 Wraps [`teamver-agent-skills`](./README.md) for **OpenClaw** tool registration and dispatch so the engine can talk to **Teamver Main** (channel, Drive, DM) and **Teamver Mail**.
 
-PyPI: [teamver-openclaw-adapter](https://pypi.org/project/teamver-openclaw-adapter/) **0.1.1** (needs `teamver-agent-sdk>=0.6.9` and `teamver-agent-skills>=0.1.2`).
+PyPI: [teamver-openclaw-adapter](https://pypi.org/project/teamver-openclaw-adapter/) **0.1.1** (needs `teamver-agent-sdk>=0.6.10` and `teamver-agent-skills>=0.1.2`).
 
 This is a **Python tool bridge**, not an OpenClaw/Codex `SKILL.md` package. See [terminology](../terminology.md).
 
@@ -13,7 +13,7 @@ Trust / tokens: Agents Console injects `openclaw.env`. **ACL is policy; `tv_ak_*
 ## Install (inside the OpenClaw / agent image)
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.9' 'teamver-openclaw-adapter==0.1.1'
+pip install 'teamver-agent-sdk==0.6.10' 'teamver-openclaw-adapter==0.1.1'
 ```
 
 ## Env the engine should already have
