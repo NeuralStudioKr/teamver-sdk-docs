@@ -61,6 +61,23 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 
 ---
 
+## Identity — `GET /ai-agents/me` (Main BE)
+
+This is **not** an ns-teamver-agents route. Agents fallback is `GET /api/v2/engine/whoami` (`tv_cp_`, ids only).
+
+| Field | Meaning |
+|-------|---------|
+| `workspace_id` / `agent_id` | Principal from `tv_ak_*` |
+| `name` / `handle` / `scopes` | Display + credential scopes |
+| `channels.items` | Read-effective ACL (same as `/ai-agents/me/accessible-channels`) |
+| `drives.items` | Enabled drives with read |
+| `dm` | `{applied_enabled}` |
+| `report_channel_id` | Default report channel, or `null` |
+
+Missing/invalid Bearer → **401** `invalid_token`. A **404** on staging means the live container has not been redeployed (`deploy.sh --staging`), not that the token is wrong.
+
+---
+
 ## Channel — `ChannelClient`
 
 | SDK method | HTTP | Body / query |
