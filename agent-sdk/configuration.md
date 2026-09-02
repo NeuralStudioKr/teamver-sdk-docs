@@ -53,7 +53,12 @@ If ids are already injected (VM `openclaw.env`), the SDK uses them and does not 
 | Control plane | `tv_cp_*` | Identity fallback `GET /api/v2/engine/whoami` only |
 | Other secret managers | `TEAMVER_ALLOW_SECRET_REF=1` | Skip prefix; **user JWT (`eyJ…`) is still rejected** |
 
-OpenClaw Secret Store injects a process-local sentinel. The Gateway substitutes the real `tv_ak_*` only on outbound HTTPS. Run `whoami` / `doctor` / `channels` **via gateway exec**, not a local shell that never hits that proxy.
+OpenClaw Secret Store injects a process-local sentinel. The Gateway substitutes the real `tv_ak_*` only on outbound HTTPS. Run `whoami` / `doctor --probe` / `channels` / `files` / `dm` **via gateway exec**, not a local shell that never hits that proxy.
+
+```bash
+# Recommended (OpenClaw VM)
+python -m teamver_agent_sdk doctor --probe
+```
 
 Do **not** put user passwords or `TEAMVER_INTERNAL_API_KEY` in the agent runtime.
 

@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` (0.6.10+ DM `/me/dm` + channel `body`; 0.6.9+ Drive `/me/drives`; 0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
+**Package:** `teamver-agent-sdk` (0.6.11+ inbox/`reply()`/`doctor --probe`; 0.6.10+ DM `/me/dm` + channel `body`; 0.6.9+ Drive `/me/drives`; 0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
@@ -17,6 +17,7 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 | `channel` | `ChannelClient` | lazy; requires channel env |
 | `dm` | `DmClient` | lazy; same token as channel |
 | `drive` | `DriveClient` | lazy; same token as channel |
+| `inbox` | `InboxClient` | lazy; `poll` / `reply` / `ack` (0.6.11+) |
 | `events` | `EventStream` | lazy; same token as channel |
 | `mail` | `TeamverMailAgentClient` | lazy; requires mail env |
 | `report(...)` | async → `ReportResult` | channel post and/or mail reply |
@@ -63,7 +64,7 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 
 ## Identity — `GET /ai-agents/me` (Main BE)
 
-This is **not** an ns-teamver-agents route. Agents fallback is `GET /api/v2/engine/whoami` (`tv_cp_`, ids only).
+This is **not** an ns-teamver-agents route. Agents fallback is `GET /api/v2/engine/whoami` (`tv_cp_`, ids only). N33 adds `GET /api/v2/engine/main-me` and `GET /api/v2/engine/report-policy` (same `tv_cp_`, wrap Main `/me`; no ACL recompute).
 
 | Field | Meaning |
 |-------|---------|
@@ -162,13 +163,14 @@ Sibling **200** examples:
 | SDK method | HTTP | Body / query |
 |------------|------|----------------|
 | `list_channels()` | GET `/ai-agents/me/accessible-channels` (404 → workspace `/ai-agents/{id}/accessible-channels`). **Never** `/collab/channels`. | — |
-| `post_message(channel_id, text, mentions=, reply_to_message_id=)` | POST `/workspace/{ws}/channels/{id}/messages` | JSON `{body, text, mentions?, parent_message_id?}` (`body` is required by Main) |
-| `read_messages(channel_id, limit=50, cursor=)` | GET same path | `limit`, `cursor` |
+| `post_message(channel_id, text, mentions=, reply_to_message_id=, correlation_id=, task_id=)` | POST `/workspace/{ws}/channels/{id}/messages` | JSON `{body, text?, mentions?, parent_message_id?, correlation_id?, task_id?}` (`body` is required by Main) |
+| `reply(message, text, …)` | same POST | infers `channel_id` + `reply_to_message_id` from `InboxItem` / `AgentMessage` / dict |
+| `read_messages(channel_id, limit=50, cursor=, before=, after=)` | GET same path | `limit`, `before` (Main keyset; `cursor` is an alias), `after` |
 | `react(channel_id, message_id, emoji)` | POST `…/messages/{message_id}/reactions` | `{emoji}` |
 
 Auth: Bearer `tv_ak_*`.
 
-Agent tools: `teamver_whoami` / `teamver_report` / `teamver_channel_list` / `post` / `read` / `react`.
+Agent tools: `teamver_whoami` / `teamver_report` / `teamver_inbox_poll` / `teamver_inbox_reply` / `teamver_channel_list` / `post` / `read` / `react`.
 
 ---
 
@@ -181,9 +183,10 @@ Agent tools: `teamver_whoami` / `teamver_report` / `teamver_channel_list` / `pos
 | `search_users(q=)` | GET `/ai-agents/me/directory/users?q=` |
 | `open_thread_by_email(email)` | search → exact email → `open_thread` |
 | `read_messages(thread_id, …)` | GET `…/dm/threads/{id}/messages` |
-| `post_message(thread_id, text, …)` | POST same path `{text, body}` |
+| `post_message(thread_id, text, …)` | POST same path `{text, body, correlation_id?, task_id?}` |
+| `reply(thread_id_or_item, text, …)` | alias of `post_message` |
 
-Agent tools: `teamver_dm_list_threads` / `open_thread` / `read_messages` / `post_message`.
+Agent tools: `teamver_dm_list_threads` / `open_thread` / `read_messages` / `post_message`. Inbox: `teamver_inbox_poll` / `teamver_inbox_reply`.
 
 ---
 
@@ -198,6 +201,33 @@ Agent tools: `teamver_dm_list_threads` / `open_thread` / `read_messages` / `post
 | `upload(local_path=, …)` | upload-request → PUT → confirm (human path until N29) |
 
 Agent tools: `teamver_drive_list_drives` / `list_files` / `download_url` / `download` / `upload`.
+
+---
+
+## Inbox — `InboxClient` (0.6.11+)
+
+Additive. Existing `channel` / `dm` / `events` clients stay.
+
+| SDK method | HTTP | Notes |
+|------------|------|--------|
+| `poll(store=, limit=)` | GET `/ai-agents/me/inbox` | fallback: events poll, then compose ACL channels (max 8) + DM threads (max 12) |
+| `reply(item, text, …)` | channel or DM POST | uses item surface (`reply_to_message_id` vs `thread_id`) |
+| `ack(event_id)` | POST `/ai-agents/me/inbox/{id}/ack` | |
+| checkpoint `get_cursor` / `save_cursor` | local JSON | last-seen per surface key (`channel:{id}`, `dm:{id}`, `inbox`) |
+
+Typed: `AgentMessage.from_api` coalesces `id`/`message_id`, `body`/`text`. Dict-returning APIs are unchanged.
+
+```python
+from teamver_agent_sdk import FileCheckpointStore
+
+store = FileCheckpointStore("/tmp/teamver-inbox.json")
+for item in await agent.inbox.poll(store=store):
+    await agent.inbox.reply(item, "received")
+    if item.event_type:
+        await agent.inbox.ack(item.id)
+```
+
+CLI: `python -m teamver_agent_sdk doctor --probe` (read) / `--probe-write`. Sentinel: run via OpenClaw **gateway exec**.
 
 ---
 
@@ -254,4 +284,5 @@ Used by channel + events only:
 |-------|----------------|
 | `TeamverAgentConfigError` | Invalid/missing config |
 | `TeamverAgentAPIError` | Main API failure |
-| `TeamverAgentError` | Base class |
+| `TeamverAgentError` | Base class; `.status_code` `.path` `.request_id` `.response_body` |
+| `format_error(exc)` | one-line ops log (no token) |

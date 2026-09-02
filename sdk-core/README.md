@@ -12,7 +12,7 @@ PyPI: [teamver-sdk-core](https://pypi.org/project/teamver-sdk-core/)
 | --- | --- |
 | `defaults` | Production API hosts: `https://api.teamver.com`, `https://agent-api.teamver.com`, `https://mail-api.teamver.com` |
 | `transport` | `TeamverAsyncTransport` — httpx async requests, retry, error normalization |
-| `errors` | `TeamverSDKError` tree + `error_for_status` / `parse_error_body` |
+| `errors` | `TeamverSDKError` tree + `error_for_status` / `parse_error_body` / `format_error` |
 | `retry` | `RetryPolicy` — safe retries (non-idempotent POST needs `idempotency_key`) |
 | `context` | `RequestContext` — `request_id` / `correlation_id` |
 | `pagination` | cursor `iterate_pages` |
@@ -43,6 +43,8 @@ TeamverSDKError
 ├─ TemporaryUnavailableError  (502/503/504)
 └─ TransportError
 ```
+
+`TeamverSDKError` carries `.status_code`, `.path`, `.request_id`, `.response_body`. Use `format_error(exc)` for a one-line ops log (no token). Requires **0.1.3+**.
 
 ## Retry rules
 

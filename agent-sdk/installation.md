@@ -24,10 +24,13 @@ Then (inside OpenClaw **gateway exec** if the token is a sentinel):
 
 ```bash
 python -m teamver_agent_sdk whoami
-python -m teamver_agent_sdk doctor
+python -m teamver_agent_sdk doctor --probe
 python -m teamver_agent_sdk channels
 python -m teamver_agent_sdk files
+python -m teamver_agent_sdk dm
 ```
+
+A local shell that never hits the Gateway proxy will **not** turn `oc-sent-v….end` into `tv_ak_*`. Use `gateway_exec` or a real `tv_ak_*`.
 
 ## Requirements
 
@@ -43,7 +46,7 @@ pip install teamver-agent-sdk
 Pin a version:
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.10'
+pip install 'teamver-agent-sdk==0.6.11'
 ```
 
 Dependencies installed automatically:

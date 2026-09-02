@@ -45,7 +45,7 @@ async def cmd_surfaces(_: argparse.Namespace) -> None:
     _print_json(
         {
             "facade": "TeamverAgent",
-            "lazy_surfaces": ["channel", "events", "mail", "jobs", "runtime"],
+            "lazy_surfaces": ["inbox", "channel", "dm", "drive", "events", "mail", "jobs", "runtime"],
             "config_workspace": agent.config.workspace_id,
             "config_agent": agent.config.agent_id,
         }

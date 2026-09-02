@@ -27,6 +27,7 @@ async def main():
     print([s.name for s in registry.list_skills()])
 
     result = await executor.execute("teamver_whoami", {})
+    result = await executor.execute("teamver_inbox_poll", {"limit": 20})
     result = await executor.execute("teamver_channel_list", {})
     print(result)
 
@@ -52,6 +53,7 @@ See [openclaw-adapter.md](./openclaw-adapter.md).
 The default registry covers Teamver surfaces such as:
 
 - Channel: list / post / read / react  
+- Inbox: poll new channel+DM instructions / reply on the originating surface  
 - DM: threads / messages  
 - Drive: drives / files  
 - Jobs / heartbeat / mail tools  

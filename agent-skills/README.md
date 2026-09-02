@@ -1,7 +1,7 @@
 # teamver-agent-skills (+ adapters)
 
 Engine-neutral **Teamver agent skills**: registry, executor, and the default catalog
-(channel, DM, Drive, jobs, mail, heartbeat) backed by [`teamver-agent-sdk`](../agent-sdk/).
+(inbox, channel, DM, Drive, jobs, mail, heartbeat) backed by [`teamver-agent-sdk`](../agent-sdk/).
 
 Does **not** import OpenClaw or Hermes. Install an adapter for engine tool registration.
 

@@ -19,6 +19,7 @@ Check what you still need:
 ```bash
 python -m teamver_agent_sdk required-env
 python -m teamver_agent_sdk whoami
+python -m teamver_agent_sdk doctor --probe   # live channel-read / dm-read / files
 ```
 
 ## 2. Run
@@ -39,6 +40,9 @@ async def main():
     files = await agent.drive.list_files(limit=20)
     threads = await agent.dm.list_threads(limit=10)
 
+    for item in await agent.inbox.poll():
+        await agent.inbox.reply(item, "received")
+
     await agent.aclose()
 
 asyncio.run(main())
@@ -55,6 +59,7 @@ from teamver_agent_skills import AgentToolAdapter
 
 adapter = AgentToolAdapter(agent)
 await adapter.dispatch("teamver_whoami", {})
+await adapter.dispatch("teamver_inbox_poll", {"limit": 20})
 await adapter.dispatch("teamver_channel_list", {})
 await adapter.dispatch("teamver_report", {"text": "hello"})
 ```

@@ -5,11 +5,11 @@ This is the page an engine should follow after installing from PyPI.
 ## Install
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.10'
+pip install 'teamver-agent-sdk==0.6.11'
 python -c "import teamver_agent_sdk as m; print(m.__version__)"
 ```
 
-Need **0.6.10+** for DM (`/ai-agents/me/dm/…`) and channel POST `body`. **0.6.9+** for Drive file list (`/ai-agents/me/drives/…`). 0.6.8+ for OpenClaw Secret Store sentinels. 0.6.6+ is token-only identity. 0.6.7 drops `/collab/channels` for engines.
+Need **0.6.11+** for unified inbox / `reply()` / `doctor --probe`. **0.6.10+** for DM (`/ai-agents/me/dm/…`) and channel POST `body`. **0.6.9+** for Drive file list (`/ai-agents/me/drives/…`). 0.6.8+ for OpenClaw Secret Store sentinels. 0.6.6+ is token-only identity. 0.6.7 drops `/collab/channels` for engines.
 
 ## Ask the human for this (and only this)
 
@@ -31,10 +31,13 @@ Run these **via OpenClaw gateway exec** when the token is a sentinel, so egress 
 
 ```bash
 python -m teamver_agent_sdk whoami
-python -m teamver_agent_sdk doctor
+python -m teamver_agent_sdk doctor --probe
 python -m teamver_agent_sdk channels
 python -m teamver_agent_sdk files
+python -m teamver_agent_sdk dm
 ```
+
+Do not run those in a local laptop shell against a sentinel. The Gateway substitutes `tv_ak_*` only on HTTPS egress from **gateway exec**.
 
 ### GET `/api/v2/ai-agents/me` response example
 
@@ -85,11 +88,13 @@ agent = await TeamverAgent.connect()
 await agent.channel.list_channels()
 await agent.report(text="connected")
 await agent.drive.list_files(limit=20)
+for item in await agent.inbox.poll():
+    await agent.inbox.reply(item, "ack")
 ```
 
 ## Bake / OpenClaw image
 
-The OpenClaw engine image installs these packages from **PyPI** (`teamver-agent-sdk==0.6.10`, `teamver-openclaw-adapter==0.1.1`). There is no SDK source tree inside `ns-teamver-agents`.
+The OpenClaw engine image installs these packages from **PyPI** (`teamver-agent-sdk==0.6.11`, `teamver-openclaw-adapter==0.1.1`). There is no SDK source tree inside `ns-teamver-agents`.
 
 Channel list is `GET /api/v2/ai-agents/me/accessible-channels` (ACL). Engines never call `/collab/channels`.
 

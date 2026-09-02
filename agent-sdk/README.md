@@ -1,6 +1,6 @@
 # teamver-agent-sdk
 
-Official **Teamver Agent SDK** for agent runtimes (channel, DM, Drive, mail, jobs, agent tools).
+Official **Teamver Agent SDK** for agent runtimes (inbox, channel, DM, Drive, mail, jobs, agent tools).
 
 PyPI: [teamver-agent-sdk](https://pypi.org/project/teamver-agent-sdk/)
 
@@ -19,7 +19,7 @@ PyPI: [teamver-agent-sdk](https://pypi.org/project/teamver-agent-sdk/)
 
 | Surface | Token | Notes |
 |---------|-------|-------|
-| Channel / DM / Drive / SSE | `tv_ak_*` | Main API |
+| Channel / DM / Drive / inbox / SSE | `tv_ak_*` | Main API |
 | Jobs / heartbeat | `tv_ak_*` | Agents BE |
 | Mail | `tv_agent_*` | via `teamver-mail-agent` |
 
@@ -48,6 +48,8 @@ from teamver_agent_sdk import TeamverAgent
 async def main():
     agent = await TeamverAgent.connect()
     await agent.report(text="Deploy finished ✅")
+    for item in await agent.inbox.poll():
+        await agent.inbox.reply(item, "received")
     await agent.aclose()
 
 asyncio.run(main())

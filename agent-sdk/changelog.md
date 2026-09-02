@@ -2,6 +2,21 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.11] - 2026-09-02
+
+### Added
+- `agent.inbox.poll(store=)` / `reply()` / `ack()` — unified channel+DM intake. Prefers Main `GET /ai-agents/me/inbox`, then events poll, then ACL compose.
+- `ChannelClient.reply()` / `DmClient.reply()`. Checkpoint `get_cursor` / `save_cursor`.
+- `AgentMessage.from_api()` — coalesces `id`/`message_id` and `body`/`text`.
+- Errors carry `path` and `response_body` (`teamver-sdk-core` 0.1.3). `format_error()`.
+- CLI `doctor --probe` (channel-read, dm-read, files) and `--probe-write`.
+- Tools `teamver_inbox_poll` / `teamver_inbox_reply` (`teamver-agent-skills` 0.1.3).
+
+### Changed
+- Channel `read_messages` sends Main `before`/`after` (`cursor` still accepted as `before`).
+- Channel/DM post accept optional `correlation_id` / `task_id`.
+- OpenClaw sentinel docs: run CLI via **gateway exec** (`doctor --probe`).
+
 ## [0.6.10] - 2026-09-02
 
 ### Changed

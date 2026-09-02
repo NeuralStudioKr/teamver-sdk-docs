@@ -2,7 +2,7 @@
 
 Wraps [`teamver-agent-skills`](./README.md) for **OpenClaw** tool registration and dispatch so the engine can talk to **Teamver Main** (channel, Drive, DM) and **Teamver Mail**.
 
-PyPI: [teamver-openclaw-adapter](https://pypi.org/project/teamver-openclaw-adapter/) **0.1.1** (needs `teamver-agent-sdk>=0.6.10` and `teamver-agent-skills>=0.1.2`).
+PyPI: [teamver-openclaw-adapter](https://pypi.org/project/teamver-openclaw-adapter/) **0.1.1** (needs `teamver-agent-sdk>=0.6.11` and `teamver-agent-skills>=0.1.3` for inbox tools).
 
 This is a **Python tool bridge**, not an OpenClaw/Codex `SKILL.md` package. See [terminology](../terminology.md).
 
@@ -13,7 +13,7 @@ Trust / tokens: Agents Console injects `openclaw.env`. **ACL is policy; `tv_ak_*
 ## Install (inside the OpenClaw / agent image)
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.10' 'teamver-openclaw-adapter==0.1.1'
+pip install 'teamver-agent-sdk==0.6.11' 'teamver-openclaw-adapter==0.1.1'
 ```
 
 ## Env the engine should already have
@@ -59,6 +59,7 @@ Wire `bridge.list_tools()` / `bridge.dispatch(name, args)` to the OpenClaw plugi
 | Goal | Tool name |
 |------|-----------|
 | Who am I / default report | `teamver_whoami` · `teamver_report` |
+| New instruction / same-surface reply | `teamver_inbox_poll` · `teamver_inbox_reply` |
 | List / post / read / react on a **channel** | `teamver_channel_list` · `teamver_channel_post` · `teamver_channel_read` · `teamver_channel_react` |
 | **DM** threads | `teamver_dm_list_threads` · `teamver_dm_open_thread` · `teamver_dm_read_messages` · `teamver_dm_post_message` |
 | **Drive** list / download / upload | `teamver_drive_list_drives` · `teamver_drive_list_files` · `teamver_drive_download_url` · `teamver_drive_download` · `teamver_drive_upload` |

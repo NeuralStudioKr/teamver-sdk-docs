@@ -1,13 +1,14 @@
 # Teamver Agent SDK — AI Agent Guide
 
 **Audience:** agent runtimes, VM-hosted agents, and LLM automation that **report to Teamver channels** and/or **reply via Teamver Mail** with one config surface.  
-**Package:** `teamver-agent-sdk` v0.6.10 — async `httpx` on Main (channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
-**Drive/DM:** see [API reference](./api-reference.md) (DM / Drive sections).
+**Package:** `teamver-agent-sdk` v0.6.11 — async `httpx` on Main (inbox/channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
+**Drive/DM/inbox:** see [API reference](./api-reference.md).
 
 ## 변경 이력
 
 | 일시 (KST) | 변경 내용 |
 |---|-----|
+| 2026-09-02 | 0.6.11: inbox / `reply()` / typed messages / `doctor --probe` / sentinel gateway_exec |
 | 2026-09-02 | 0.6.10: DM `/ai-agents/me/dm` · channel POST `body` · CLI `dm`/`drive-list` |
 | 2026-09-02 | 0.6.9: Drive files via `/ai-agents/me/drives/…` · CLI `files` |
 | 2026-09-02 | 0.6.8: OpenClaw managed secret sentinel · CLI `channels` · staging host `stg-api.teamver.com` |
@@ -138,6 +139,27 @@ Rules:
 - Mail reply requires `subject`.
 - `ReportResult.channel_message` / `.mail_reply` hold JSON dicts from the APIs.
 
+### 4.1 Inbox (`agent.inbox`) — 0.6.11+
+
+Prefer this for “new instruction → same-surface reply”. Channel and DM clients remain.
+
+```python
+from teamver_agent_sdk import FileCheckpointStore
+
+agent = await TeamverAgent.connect()
+store = FileCheckpointStore("/tmp/teamver-inbox.json")
+for item in await agent.inbox.poll(store=store):
+    await agent.inbox.reply(item, "received")
+await agent.aclose()
+```
+
+- `poll` tries `GET /ai-agents/me/inbox`, then events poll, then ACL channel+DM compose.
+- `reply` uses `reply_to_message_id` on channel and `thread_id` on DM.
+- Cursor helpers: `store.get_cursor` / `save_cursor`.
+- Typed: `AgentMessage.from_api` (`id`/`message_id`, `body`/`text`).
+
+OpenClaw sentinel: `python -m teamver_agent_sdk doctor --probe` must run via **gateway exec**.
+
 ---
 
 ## 5. Channel client (`agent.channel`)
@@ -153,8 +175,9 @@ msg = await agent.channel.post_message(
     reply_to_message_id="MSG-…",  # optional thread reply
 )
 
-# Read history
-page = await agent.channel.read_messages("CH-…", limit=50, cursor=None)
+# Read history (before = Main keyset; cursor is an alias)
+page = await agent.channel.read_messages("CH-…", limit=50, before=None)
+await agent.channel.reply(page["items"][0], "ack")  # or InboxItem / AgentMessage
 
 # Reaction
 await agent.channel.react("CH-…", message_id="MSG-…", emoji="✅")
@@ -248,7 +271,7 @@ for ev in events:
     await agent.mail.processing_complete(msg["id"], response_message_id="…")
 ```
 
-Or use **`run_standard_inbound_loop`** from `teamver_mail_agent` — see [teamver-mail-agent AI guide](../../teamver-mail-agent-python/docs/teamver_mail_agent_AI_AGENT_GUIDE.md).
+Or use **`run_standard_inbound_loop`** from `teamver_mail_agent` — see [mail-agent guide](../mail-agent/guide.md).
 
 Mail API paths, scopes, and M2M: [teamver-mail-agent API_QUICKREF.md](../mail-agent/api-reference.md).
 
@@ -258,8 +281,9 @@ Mail API paths, scopes, and M2M: [teamver-mail-agent API_QUICKREF.md](../mail-ag
 
 | Exception | When |
 |-----------|------|
-| `TeamverAgentConfigError` | Missing workspace/agent id, wrong token prefix, surface used without env |
-| `TeamverAgentAPIError` | Main HTTP 4xx/5xx or transport failure; `.status_code`, `.code`, `.response_body` |
+| `TeamverAgentConfigError` | Missing token / wrong prefix / surface used without env |
+| `TeamverAgentAPIError` | Main HTTP 4xx/5xx or transport failure; `.status_code`, `.path`, `.request_id`, `.response_body` |
+| `format_error(exc)` | one-line ops log (no token) |
 | `ImportError` | `teamver-mail-agent` not installed (required dependency) |
 
 Mail errors from delegated client: `MailAgentAPIError` (`teamver_mail_agent.errors`).
@@ -272,7 +296,7 @@ Main error JSON may use `error.code` / `error.message` or FastAPI `detail` strin
 
 1. Agents Console: Access ACL applied **and** `tv_ak_*` injected into OpenClaw `openclaw.env` as `TEAMVER_AGENT_TOKEN`. Mail: provision + `tv_agent_*`.
 2. Runtime env: `TEAMVER_*` from §2 (`W-…` / `AG2-…`). Never `TEAMVER_INTERNAL_API_KEY`.
-3. Process: `listen()` loop or mail event poll → handle → `report()` or `mail.reply`.
+3. Process: `inbox.poll()` (or `listen()` / mail event poll) → handle → `inbox.reply()` / `report()` / `mail.reply`.
 4. On shutdown: `await agent.aclose()`.
 
 ---
@@ -280,7 +304,7 @@ Main error JSON may use `error.code` / `error.message` or FastAPI `detail` strin
 ## 10. Verification
 
 ```bash
-pip install 'teamver-agent-sdk>=0.6.5'
+pip install 'teamver-agent-sdk>=0.6.11'
 python -c "import teamver_agent_sdk as m; print(m.__version__)"
 ```
 

@@ -4,6 +4,10 @@ Public docs mirror. Package changelogs may also ship on PyPI / in the source rep
 
 ## teamver-agent-skills
 
+### [0.1.3] - 2026-09-02
+
+- `teamver_inbox_poll` / `teamver_inbox_reply`. Catalog 26 → 28 tools. Needs `teamver-agent-sdk>=0.6.11`.
+
 ### [0.1.2] - 2026-09-02
 
 - Preserve HTTP status on skill failure so OpenClaw can return 401 vs 404 as tool results.

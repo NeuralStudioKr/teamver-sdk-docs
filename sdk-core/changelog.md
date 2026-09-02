@@ -3,6 +3,11 @@
 All notable changes to this package are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.3] - 2026-09-02
+
+### Added
+- `TeamverSDKError.path` / `response_body` and `format_error()`. Transport fills path on HTTP failures.
+
 ## [0.1.2] - 2026-08-03
 
 ### Added
