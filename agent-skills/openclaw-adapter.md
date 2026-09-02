@@ -2,7 +2,7 @@
 
 Wraps [`teamver-agent-skills`](./README.md) for **OpenClaw** tool registration and dispatch so the engine can talk to **Teamver Main** (channel, Drive, DM) and **Teamver Mail**.
 
-PyPI: [teamver-openclaw-adapter](https://pypi.org/project/teamver-openclaw-adapter/) **0.1.1** (needs `teamver-agent-sdk>=0.6.11` and `teamver-agent-skills>=0.1.3` for inbox tools).
+PyPI: [teamver-openclaw-adapter](https://pypi.org/project/teamver-openclaw-adapter/) **0.1.2** (needs `teamver-agent-sdk>=0.6.12` and `teamver-agent-skills>=0.1.3` for inbox tools).
 
 This is a **Python tool bridge**, not an OpenClaw/Codex `SKILL.md` package. See [terminology](../terminology.md).
 
@@ -13,7 +13,7 @@ Trust / tokens: Agents Console injects `openclaw.env`. **ACL is policy; `tv_ak_*
 ## Install (inside the OpenClaw / agent image)
 
 ```bash
-pip install 'teamver-agent-sdk==0.6.11' 'teamver-openclaw-adapter==0.1.1'
+pip install 'teamver-agent-sdk==0.6.12' 'teamver-openclaw-adapter==0.1.2'
 ```
 
 ## Env the engine should already have
@@ -75,6 +75,26 @@ Drive tool results must carry **path / URL / asset_id**, not raw file bytes.
 3. **Agent 메일** — `@teamver.com` provisioned if using mail.
 
 How to verify end-to-end as a human: Agents `docs_specs` **22** (OpenClaw · Main channel · Drive · DM · Mail).
+
+## Inbound event webhook (0.1.2+)
+
+Main POSTs inbox-shaped JSON to your HTTPS URL. The adapter verifies HMAC (`sha256=` + hex of `{timestamp}.{raw_body}`), appends a local JSONL queue, and returns 2xx. **Do not** persist HTTP `reply.body` as a channel message — drain and `inbox.reply()`.
+
+```bash
+TEAMVER_WEBHOOK_SECRET=… TEAMVER_WEBHOOK_QUEUE=./teamver-webhook-queue.jsonl \
+  python -m teamver_openclaw_adapter webhook --port 8788
+```
+
+```python
+from teamver_openclaw_adapter import WebhookIngress
+
+ingress = WebhookIngress("./teamver-webhook-queue.jsonl", secret="…")
+status, _ = await ingress.accept(headers, raw_body)  # 202 / 204 / 401
+for item in ingress.drain():
+    await agent.inbox.reply(item, "received")
+```
+
+Ping (`events.ping`) is not an inbox item. Duplicate deliveries use SDK cursor `webhook:{event_id}`. `inbox.poll()` remains the fallback.
 
 ## Notes
 

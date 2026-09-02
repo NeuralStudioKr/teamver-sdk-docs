@@ -1,13 +1,14 @@
 # Teamver Agent SDK — AI Agent Guide
 
 **Audience:** agent runtimes, VM-hosted agents, and LLM automation that **report to Teamver channels** and/or **reply via Teamver Mail** with one config surface.  
-**Package:** `teamver-agent-sdk` v0.6.11 — async `httpx` on Main (inbox/channel/DM/drive); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
+**Package:** `teamver-agent-sdk` v0.6.12 — async `httpx` on Main (inbox/channel/DM/drive + event webhook); mail via **`teamver-mail-agent`**. Token-only identity (`GET /api/v2/ai-agents/me`). OpenClaw sentinels (`oc-sent-v….end`) are first-class.  
 **Drive/DM/inbox:** see [API reference](./api-reference.md).
 
 ## 변경 이력
 
 | 일시 (KST) | 변경 내용 |
 |---|-----|
+| 2026-09-02 | 0.6.12: `handle_webhook` → InboxItem · OpenClaw adapter 0.1.2 ingress |
 | 2026-09-02 | 0.6.11: inbox / `reply()` / typed messages / `doctor --probe` / sentinel gateway_exec |
 | 2026-09-02 | 0.6.10: DM `/ai-agents/me/dm` · channel POST `body` · CLI `dm`/`drive-list` |
 | 2026-09-02 | 0.6.9: Drive files via `/ai-agents/me/drives/…` · CLI `files` |
@@ -158,6 +159,21 @@ await agent.aclose()
 - Cursor helpers: `store.get_cursor` / `save_cursor`.
 - Typed: `AgentMessage.from_api` (`id`/`message_id`, `body`/`text`).
 
+### 4.1.1 Event webhook (0.6.12+)
+
+Main POSTs inbox-shaped JSON to your HTTPS URL. **Do not** persist HTTP `reply.body` as a channel message.
+
+```python
+result = await agent.inbox.handle_webhook(
+    raw_body, headers, secret=os.environ.get("TEAMVER_WEBHOOK_SECRET"), store=store
+)
+if not result.ping and not result.duplicate:
+    for item in result.items:
+        await agent.inbox.reply(item, "received")
+```
+
+HMAC: `sha256=HMAC_SHA256(secret, timestamp + "." + raw_body)`. Ping is not an inbox item. OpenClaw: `python -m teamver_openclaw_adapter webhook`.
+
 OpenClaw sentinel: `python -m teamver_agent_sdk doctor --probe` must run via **gateway exec**.
 
 ---
@@ -296,7 +312,7 @@ Main error JSON may use `error.code` / `error.message` or FastAPI `detail` strin
 
 1. Agents Console: Access ACL applied **and** `tv_ak_*` injected into OpenClaw `openclaw.env` as `TEAMVER_AGENT_TOKEN`. Mail: provision + `tv_agent_*`.
 2. Runtime env: `TEAMVER_*` from §2 (`W-…` / `AG2-…`). Never `TEAMVER_INTERNAL_API_KEY`.
-3. Process: `inbox.poll()` (or `listen()` / mail event poll) → handle → `inbox.reply()` / `report()` / `mail.reply`.
+3. Process: `inbox.poll()` and/or `handle_webhook` → `inbox.reply()` / `report()` / `mail.reply`.
 4. On shutdown: `await agent.aclose()`.
 
 ---
@@ -304,7 +320,7 @@ Main error JSON may use `error.code` / `error.message` or FastAPI `detail` strin
 ## 10. Verification
 
 ```bash
-pip install 'teamver-agent-sdk>=0.6.11'
+pip install 'teamver-agent-sdk>=0.6.12'
 python -c "import teamver_agent_sdk as m; print(m.__version__)"
 ```
 

@@ -2,6 +2,14 @@
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.12] - 2026-09-02
+
+### Added
+- Event webhook helpers: `verify_webhook_signature`, `parse_webhook_event`, `handle_webhook` → `InboxItem`.
+- `InboxClient.handle_webhook()`. HMAC is `{timestamp}.{raw_body}` (same as Main). Ping is not an inbox item.
+- Delivery dedupe via checkpoint cursor `webhook:{event_id}`.
+- Does **not** persist webhook HTTP `reply.body` as a channel message — use `inbox.reply()`.
+
 ## [0.6.11] - 2026-09-02
 
 ### Added

@@ -50,6 +50,7 @@ async def main():
     await agent.report(text="Deploy finished ✅")
     for item in await agent.inbox.poll():
         await agent.inbox.reply(item, "received")
+    # Event webhook (0.6.12+): agent.inbox.handle_webhook(raw_body, headers, secret=…)
     await agent.aclose()
 
 asyncio.run(main())

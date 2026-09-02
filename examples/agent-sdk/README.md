@@ -3,7 +3,7 @@
 Install from PyPI first:
 
 ```bash
-pip install 'teamver-agent-sdk>=0.6.11'
+pip install 'teamver-agent-sdk>=0.6.12'
 cp .env.example .env   # fill tokens
 ```
 

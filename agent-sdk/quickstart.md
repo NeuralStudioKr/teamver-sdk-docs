@@ -42,6 +42,7 @@ async def main():
 
     for item in await agent.inbox.poll():
         await agent.inbox.reply(item, "received")
+    # Event webhook (0.6.12+): await agent.inbox.handle_webhook(raw_body, headers, secret=secret)
 
     await agent.aclose()
 

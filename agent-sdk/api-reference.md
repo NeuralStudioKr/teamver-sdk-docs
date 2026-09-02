@@ -1,6 +1,6 @@
 # Teamver Agent SDK — API quick reference
 
-**Package:** `teamver-agent-sdk` (0.6.11+ inbox/`reply()`/`doctor --probe`; 0.6.10+ DM `/me/dm` + channel `body`; 0.6.9+ Drive `/me/drives`; 0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
+**Package:** `teamver-agent-sdk` (0.6.12+ webhook→InboxItem; 0.6.11+ inbox/`reply()`/`doctor --probe`; 0.6.10+ DM `/me/dm` + channel `body`; 0.6.9+ Drive `/me/drives`; 0.6.8+ OpenClaw sentinels; 0.6.6+ token-only identity via `/ai-agents/me`)  
 **Mail API:** [mail-agent/api-reference.md](../mail-agent/api-reference.md)
 
 Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
@@ -17,7 +17,7 @@ Paths below for **Main** are suffixes after `{TEAMVER_MAIN_API_BASE}/api/v2`.
 | `channel` | `ChannelClient` | lazy; requires channel env |
 | `dm` | `DmClient` | lazy; same token as channel |
 | `drive` | `DriveClient` | lazy; same token as channel |
-| `inbox` | `InboxClient` | lazy; `poll` / `reply` / `ack` (0.6.11+) |
+| `inbox` | `InboxClient` | lazy; `poll` / `reply` / `ack` / `handle_webhook` (0.6.12+) |
 | `events` | `EventStream` | lazy; same token as channel |
 | `mail` | `TeamverMailAgentClient` | lazy; requires mail env |
 | `report(...)` | async → `ReportResult` | channel post and/or mail reply |
@@ -204,7 +204,7 @@ Agent tools: `teamver_drive_list_drives` / `list_files` / `download_url` / `down
 
 ---
 
-## Inbox — `InboxClient` (0.6.11+)
+## Inbox — `InboxClient` (0.6.11+) · webhook (0.6.12+)
 
 Additive. Existing `channel` / `dm` / `events` clients stay.
 
@@ -213,7 +213,9 @@ Additive. Existing `channel` / `dm` / `events` clients stay.
 | `poll(store=, limit=)` | GET `/ai-agents/me/inbox` | fallback: events poll, then compose ACL channels (max 8) + DM threads (max 12) |
 | `reply(item, text, …)` | channel or DM POST | uses item surface (`reply_to_message_id` vs `thread_id`) |
 | `ack(event_id)` | POST `/ai-agents/me/inbox/{id}/ack` | |
-| checkpoint `get_cursor` / `save_cursor` | local JSON | last-seen per surface key (`channel:{id}`, `dm:{id}`, `inbox`) |
+| `handle_webhook(raw_body, headers, secret=, store=)` | Main outbound POST | HMAC `{ts}.{raw_body}` → `InboxItem`; ping/duplicate skip |
+| `verify_webhook_signature` / `parse_webhook_event` | local | same HMAC as Main |
+| checkpoint `get_cursor` / `save_cursor` | local JSON | last-seen per surface key (`channel:{id}`, `dm:{id}`, `inbox`, `webhook:{event_id}`) |
 
 Typed: `AgentMessage.from_api` coalesces `id`/`message_id`, `body`/`text`. Dict-returning APIs are unchanged.
 
@@ -225,6 +227,11 @@ for item in await agent.inbox.poll(store=store):
     await agent.inbox.reply(item, "received")
     if item.event_type:
         await agent.inbox.ack(item.id)
+
+# Event webhook (same InboxItem). Do not persist HTTP reply.body as a channel message.
+result = await agent.inbox.handle_webhook(raw_body, headers, secret=secret, store=store)
+for item in result.items:
+    await agent.inbox.reply(item, "received")
 ```
 
 CLI: `python -m teamver_agent_sdk doctor --probe` (read) / `--probe-write`. Sentinel: run via OpenClaw **gateway exec**.

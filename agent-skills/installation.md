@@ -33,12 +33,12 @@ pip install "teamver-agent-skills[hermes]"
 Pin versions (example):
 
 ```bash
-pip install 'teamver-agent-skills==0.1.3' 'teamver-openclaw-adapter==0.1.1'
+pip install 'teamver-agent-skills==0.1.3' 'teamver-openclaw-adapter==0.1.2'
 ```
 
 Dependencies installed automatically:
 
-- `teamver-agent-sdk` (≥ 0.6.11 for inbox tools)
+- `teamver-agent-sdk` (≥ 0.6.12 for webhook → InboxItem; ≥ 0.6.11 for inbox tools)
 - `teamver-mail-agent`, `teamver-sdk-core` (via agent-sdk)
 - `pydantic`
 

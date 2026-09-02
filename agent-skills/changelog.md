@@ -25,6 +25,11 @@ Public docs mirror. Package changelogs may also ship on PyPI / in the source rep
 
 ## teamver-openclaw-adapter
 
+### [0.1.2] - 2026-09-02
+
+- **N35 inbound webhook:** `WebhookIngress` JSONL queue, HMAC via SDK 0.6.12, `python -m teamver_openclaw_adapter webhook`.
+- Drain → `InboxItem` for existing `inbox.reply()`. OpenClaw npm is not forked.
+
 ### [0.1.1] - 2026-09-02
 
 - OpenAI function envelopes, `TOOL_NAMES`, `from_env()`.

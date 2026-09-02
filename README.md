@@ -11,11 +11,11 @@ Publisher: [pypi.org/user/neuralstudio.kr](https://pypi.org/user/neuralstudio.kr
 
 | PyPI package | Docs | Latest |
 |--------------|------|--------|
-| [`teamver-agent-sdk`](https://pypi.org/project/teamver-agent-sdk/) | [agent-sdk/](./agent-sdk/) | 0.6.11 |
+| [`teamver-agent-sdk`](https://pypi.org/project/teamver-agent-sdk/) | [agent-sdk/](./agent-sdk/) | 0.6.12 |
 | [`teamver-mail-agent`](https://pypi.org/project/teamver-mail-agent/) | [mail-agent/](./mail-agent/) | 0.3.1 |
 | [`teamver-sdk-core`](https://pypi.org/project/teamver-sdk-core/) | [sdk-core/](./sdk-core/) | 0.1.3 |
 | [`teamver-agent-skills`](https://pypi.org/project/teamver-agent-skills/) | [agent-skills/](./agent-skills/) | 0.1.3 |
-| [`teamver-openclaw-adapter`](https://pypi.org/project/teamver-openclaw-adapter/) | [agent-skills/openclaw-adapter.md](./agent-skills/openclaw-adapter.md) | 0.1.1 |
+| [`teamver-openclaw-adapter`](https://pypi.org/project/teamver-openclaw-adapter/) | [agent-skills/openclaw-adapter.md](./agent-skills/openclaw-adapter.md) | 0.1.2 |
 | [`teamver-hermes-adapter`](https://pypi.org/project/teamver-hermes-adapter/) | [agent-skills/hermes-adapter.md](./agent-skills/hermes-adapter.md) | 0.1.0 |
 
 **Start here if someone said “skill 설치”:** [terminology.md](./terminology.md) — Teamver Python skills ≠ OpenClaw/Codex `SKILL.md`.
